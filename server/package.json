@@ -1,0 +1,25 @@
+{
+  "name": "sparql_back",
+  "version": "1.0.0",
+  "description": "Sparql Back",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "client-install": "npm install --prefix ../client",
+    "start": "node server.js",
+    "client": "npm start --prefix ../client",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "prod": "concurrently \"npm run build --prefix ../client\" \"npm run server\""
+  },
+  "author": "Sadsitha Lokuge",
+  "license": "ISC",
+  "dependencies": {
+    "concurrently": "^4.1.2",
+    "dotenv": "^7.0.0",
+    "express": "^4.17.1",
+    "file-system": "^2.2.2",
+    "nodemon": "^1.19.4",
+    "sparqljs": "^3.0.0",
+    "winston": "^3.2.1"
+  }
+}
