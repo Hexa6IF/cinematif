@@ -22,7 +22,8 @@ a:focus {
 body{
     margin:0;
     padding:0;
-    background-image:url(../images/tm-catalyst-bg.jpg),url(../images/titanic.jpg);
+   /* background-image:url(../images/tm-catalyst-bg.jpg),url(../images/titanic.jpg); */
+   background-color:#0f2f2f ;
     background-repeat:no-repeat,repeat;
     background-size:auto;
     background-attachment: fixed;
