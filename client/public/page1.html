@@ -76,12 +76,30 @@ http://www.templatemo.com/tm-499-catalyst
         | Design: TemplateMo
     </div>
 </div>
-
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script>
+    let serverUrl = 'http://localhost:5000/api';
+
+    function getMovies(movieSearch)
+    {
+        let searchUrl = serverUrl+'/search/';
+        if (typeof movieSearch === 'string'){
+            $.getJSON(searchUrl+movieSearch, null, function( responseData ) {
+                console.log(responseData);
+                return responseData;
+            });
+        }
+        else {
+            console.error(movieSearch);
+            throw Error('getMovies : argument is not a string');
+        }
+    }
 
 // Write current year in copyright text.
   document.getElementsByClassName("tm-current-year").value = new Date().getFullYear();
-
+  console.log('hi from script !');
+  getMovies('Memento');
 </script>
 
+    <script src="request.js"></script>
 </body></html>

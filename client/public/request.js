@@ -1,12 +1,20 @@
-let $ = require('jquery');
+//let $ = require('jquery');
+/*require("jsdom").env("", function(err, window) {
+    if (err) {
+        console.error(err);
+        return;
+    }
 
-let serverUrl = 'localhost_something';
+    var $ = require("jquery")(window);
+});*/
+
+let serverUrl = 'localhost:5000/api/search';
 
 function getMovies(movieSearch)
 {
-    let searchUrl = serverUrl+'/movies?search=';
+    let searchUrl = serverUrl+'?title='+movieSearch;
     if (typeof movieSearch === 'string'){
-        $.getJSON(searchUrl+movieSearch, function( responseData ) {
+        $.getJSON(searchUrl+movieSearch, null, function( responseData ) {
             return responseData;
         });
     }
