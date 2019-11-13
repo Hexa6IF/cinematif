@@ -1,29 +1,37 @@
-let serverUrl = 'http://localhost:5000/api/search';
+let serverUrl = 'http://localhost:5000/api';
 
 function getMovies(movieSearch)
 {
-    //movieSearch to lowercase
+    movieSearch = movieSearch.toLowerCase();
     let queryParams = {
         title : movieSearch
     }
+
+    let searchUrl = '/search';
     if (typeof movieSearch === 'string'){
-        $.getJSON(serverUrl, queryParams, function( responseData ) {
-            console.log(responseData);
-            console.log(responseData.results.bindings);
-            let arrayBindings = responseData.results.bindings;
-            let list = document.getElementById("movie-search-results");
-            list.innerHTML = "";
-            for (let i = 0; i < arrayBindings.length; i++){
-                let movie = document.createElement("li");
-                movie.appendChild(document.createTextNode(arrayBindings[i].title.value));
-                list.appendChild(movie);
-            }
-            return responseData;
+        $.getJSON(serverUrl+searchUrl, queryParams, function( responseData ) {
+            renderSearchResult(responseData);
         });
     }
     else {
         console.error(movieSearch);
         throw Error('getMovies : argument is not a string');
+    }
+}
+
+function renderSearchResult (responseData) {
+    let arrayBindings = responseData.results.bindings;
+    let list = document.getElementById("movie-search-results");
+    list.innerHTML = "";
+    let movieDetailUrl = '/detail/film/';
+    for (let i = 0; i < arrayBindings.length; i++){
+        let movie = document.createElement("li");
+        let movieDetail = document.createElement("a");
+        movieDetail.href = serverUrl + movieDetailUrl + arrayBindings.id.value;
+        movieDetail.appendChild(document.createTextNode(arrayBindings[i].title.value));
+        movie.appendChild(movieDetail);
+        //movie.appendChild(document.createTextNode(arrayBindings[i].title.value));
+        list.appendChild(movie);
     }
 }
 
