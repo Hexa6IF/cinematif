@@ -28,9 +28,8 @@ function renderSearchResult (responseData) {
         let movie = document.createElement("li");
         let movieDetail = document.createElement("a");
         movieDetail.href = serverUrl + movieDetailUrl + arrayBindings[i].id.value;
-        //movieDetail.appendChild(document.createTextNode(arrayBindings[i].title.value));
-        //movie.appendChild(movieDetail);
-        movie.appendChild(document.createTextNode(arrayBindings[i].title.value));
+        movieDetail.appendChild(document.createTextNode(arrayBindings[i].title.value));
+        movie.appendChild(movieDetail);
         list.appendChild(movie);
     }
 }
