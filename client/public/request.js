@@ -1,20 +1,13 @@
-//let $ = require('jquery');
-/*require("jsdom").env("", function(err, window) {
-    if (err) {
-        console.error(err);
-        return;
-    }
-
-    var $ = require("jquery")(window);
-});*/
-
-let serverUrl = 'localhost:5000/api/search';
+let serverUrl = 'http://localhost:5000/api/search';
 
 function getMovies(movieSearch)
 {
-    let searchUrl = serverUrl+'?title='+movieSearch;
+    //movieSearch to lowercase
+    let queryParams = {
+        title : movieSearch
+    }
     if (typeof movieSearch === 'string'){
-        $.getJSON(searchUrl+movieSearch, null, function( responseData ) {
+        $.getJSON(serverUrl, queryParams, function( responseData ) {
             return responseData;
         });
     }
