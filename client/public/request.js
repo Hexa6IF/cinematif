@@ -8,6 +8,15 @@ function getMovies(movieSearch)
     }
     if (typeof movieSearch === 'string'){
         $.getJSON(serverUrl, queryParams, function( responseData ) {
+            console.log(responseData);
+            console.log(responseData.results.bindings);
+            let arrayBindings = responseData.results.bindings;
+            let list = document.getElementById("movie-search-results");
+            for (let i = 0; i < arrayBindings.length; i++){
+                let movie = document.createElement("li");
+                movie.appendChild(document.createTextNode(arrayBindings[i].title.value));
+                list.appendChild(movie);
+            }
             return responseData;
         });
     }
