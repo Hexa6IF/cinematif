@@ -1,12 +1,23 @@
-let $ = require('jquery');
-
-let serverUrl = 'localhost_something';
+let serverUrl = 'http://localhost:5000/api/search';
 
 function getMovies(movieSearch)
 {
-    let searchUrl = serverUrl+'/movies?search=';
+    //movieSearch to lowercase
+    let queryParams = {
+        title : movieSearch
+    }
     if (typeof movieSearch === 'string'){
-        $.getJSON(searchUrl+movieSearch, function( responseData ) {
+        $.getJSON(serverUrl, queryParams, function( responseData ) {
+            console.log(responseData);
+            console.log(responseData.results.bindings);
+            let arrayBindings = responseData.results.bindings;
+            let list = document.getElementById("movie-search-results");
+            list.innerHTML = "";
+            for (let i = 0; i < arrayBindings.length; i++){
+                let movie = document.createElement("li");
+                movie.appendChild(document.createTextNode(arrayBindings[i].title.value));
+                list.appendChild(movie);
+            }
             return responseData;
         });
     }
