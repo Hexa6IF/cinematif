@@ -47,24 +47,26 @@ app.get('/api/search', async (req, res) => {
   res.send(results);
 })
 
-app.get('/api/details/:type/:text', async (req, res, next) => {
-  const query = '';
+app.get('/api/detail/:type/:id', async (req, res, next) => {
+  let query = '';
   switch (req.params.type) {
     case 'director':
-      query = makeQueryDirector(req.params.text);
+      query = makeQueryDirector(req.params.id);
       break;
     case 'actor':
-      query = makeQueryActor(req.params.text);
+      query = makeQueryActor(req.params.id);
       break;
     case 'film':
-      query = makeQueryFilm(req.params.text);
+      query = makeQueryFilm(req.params.id);
       break;
     default:
       res.status(404)
       res.json({error : 'Request not found'});
       return null;
     }
+  console.log(query)
   const results = await getResults(query);
+  console.log(results)
   res.send(results);
 })
 
@@ -130,14 +132,17 @@ const makeQueryDirector = (para) => {
 const makeQueryFilm = (para) => {
   const query = (
     Headers +
-    `SELECT ?id ?title ?year ?directname ?iddirect ?runtime ?gross ?idact ?actorname ?country WHERE ` +
-    `{ ?actor ^dbo:starring ?movie; dbo:wikiPageID ?idact; rdfs:label ?actorname .`+
-    `FILTER(?n like '%${para}%')} LIMIT 10`);
+    `SELECT ?id ?title ?year ?directname ?iddirect ?runtime ?gross ?idact ?actorname ?country WHERE {` +
+    `?actor ^dbo:starring ?movie; dbo:wikiPageID ?idact; rdfs:label ?actorname . `+
+    `?direct dbo:wikiPageID ?iddirect; foaf:name ?directname . `+
+    `?movie dbpedia2:recorded ?year ; dbo:wikiPageID ?id ; rdf:type dbo:Film ; dbpedia2:country ?country ; dbo:director ?direct ; dbo:runtime ?runtime ; dbo:gross ?gross ; rdfs:label ?title . ` +
+    `FILTER(?id = ${para}) ` +
+    `} LIMIT 10 `);
   return query;
 }
 
 const getResults = async (query) => {
-  const response = await dps.client().query(query).timeout(15000).asJson()
+  const response = await dps.client().query(query).timeout(5000).asJson()
   return response;
 }
 /* Server */
