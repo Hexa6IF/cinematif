@@ -12,6 +12,7 @@ function getMovies(movieSearch)
             console.log(responseData.results.bindings);
             let arrayBindings = responseData.results.bindings;
             let list = document.getElementById("movie-search-results");
+            list.innerHTML = "";
             for (let i = 0; i < arrayBindings.length; i++){
                 let movie = document.createElement("li");
                 movie.appendChild(document.createTextNode(arrayBindings[i].title.value));
