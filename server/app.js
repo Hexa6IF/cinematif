@@ -116,16 +116,27 @@ const makeQuerySearch = (para) => {
 const makeQueryActor = (para) => {
   const query = (
     Headers +
-    `SELECT ?n ?id WHERE { ?m rdf:type dbo:Film; rdfs:label ?n; dbo:wikiPageID ?id. FILTER(?n like '%${para}%')} LIMIT 10`);
+    `SELECT ?idactor ?name ?movietitle ?idmovie ?thumb WHERE {` +
+    `?actor ^dbo:starring ?movie; dbo:wikiPageID ?idactor; foaf:name ?name; dbo:thumbnail ?thumb. ` +
+    `?movie  rdfs:label ?movietitle; dbo:wikiPageID ?idmovie. ` +
+    `FILTER langMatches(lang(?movietitle),"en") ` +
+    `FILTER (?idactor = ${para}) ` +
+    `} ` +
+    `LIMIT 100`);
   return query;
 }
 
 const makeQueryDirector = (para) => {
   const query = (
     Headers +
-    `SELECT ?n ?id WHERE ` +
-    `{ ?m rdf:type dbo:Film; rdfs:label ?n; dbo:wikiPageID ?id. `+
-    `FILTER(?n like '%${para}%')} LIMIT 10`);
+    `SELECT ?iddirect ?name ?movietitle ?idmovie ?thumb WHERE { ` +
+    `?movie dbo:director ?direct. ` +
+    `?direct foaf:name ?directname; dbo:wikiPageID ?iddirect; foaf:name ?name; dbo:thumbnail ?thumb. ` +
+    `?movie  rdfs:label ?movietitle; dbo:wikiPageID ?idmovie. ` +
+    `FILTER langMatches(lang(?movietitle),"en") ` +
+    `FILTER(?iddirect = ${para}) `
+    `} ` +
+    `LIMIT 100`);
   return query;
 }
 
