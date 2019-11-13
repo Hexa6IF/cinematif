@@ -27,10 +27,10 @@ function renderSearchResult (responseData) {
     for (let i = 0; i < arrayBindings.length; i++){
         let movie = document.createElement("li");
         let movieDetail = document.createElement("a");
-        movieDetail.href = serverUrl + movieDetailUrl + arrayBindings.id.value;
-        movieDetail.appendChild(document.createTextNode(arrayBindings[i].title.value));
-        movie.appendChild(movieDetail);
-        //movie.appendChild(document.createTextNode(arrayBindings[i].title.value));
+        movieDetail.href = serverUrl + movieDetailUrl + arrayBindings[i].id.value;
+        //movieDetail.appendChild(document.createTextNode(arrayBindings[i].title.value));
+        //movie.appendChild(movieDetail);
+        movie.appendChild(document.createTextNode(arrayBindings[i].title.value));
         list.appendChild(movie);
     }
 }
