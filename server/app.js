@@ -93,7 +93,7 @@ const makeQuerySearch = (para) => {
   const query = (
     Headers +
     `SELECT ?title ?id WHERE ` +
-    `{ ?m rdf:type dbo:Film; rdfs:label ?title; dbo:wikiPageID ?id. ` +
+    `{ ?m rdf:type dbo:Film; rdfs:label ?title; dbo:wikiPageID ?id; dbo:starring ?actor. ` +
     `FILTER (lcase(str(?title)) like '%${para}%') ` +
     `FILTER langMatches(lang(?title),"en") ` +
     `} LIMIT 50`);
