@@ -1,4 +1,3 @@
-
 const express = require('express')
 const app = express();
 const fs = require('file-system');
@@ -6,6 +5,8 @@ const path = require('path');
 const port = process.env.PORT || 5000;
 const dps = require('dbpedia-sparql-client').default;;
 const { createLogger, format, transports } = require('winston');
+
+const cleanFilm = require('./services/parsers').cleanFilm;
 
 
 require('dotenv').config();
@@ -49,44 +50,29 @@ app.get('/api/search', async (req, res) => {
 
 app.get('/api/detail/:type/:id', async (req, res, next) => {
   let query = '';
+  let results = null;
   switch (req.params.type) {
     case 'director':
       query = makeQueryDirector(req.params.id);
+      results = await getResults(query)
       break;
     case 'actor':
       query = makeQueryActor(req.params.id);
+      results = await getResults(query)
       break;
     case 'film':
       query = makeQueryFilm(req.params.id);
+      results = await getResults(query)
+      results.results.bindings = cleanFilm(results.results.bindings)
       break;
     default:
       res.status(404)
-      res.json({error : 'Request not found'});
+      res.json({ error: 'Request not found' });
       return null;
-    }
-  console.log(query)
-  const results = await getResults(query);
-  console.log(results)
+  }
+  //const results = await getResults(query);
   res.send(results);
 })
-
-// if (process.env.NODE_ENV === 'production') {
-//   app.use(express.static(path.join(__dirname, '../client/build')));
-//   //
-//   app.get('/*', (req, res) => {
-//     res.sendFile(path.join(__dirname, '../client/build/index.html'));
-//   })
-// } else {
-//   app.get('/*', (req, res) => {
-//     res.sendFile(path.join(__dirname, '../client/public/index.html'));
-//   })
-//   logger.add(new transports.Console({
-//     format: format.combine(
-//       format.colorize(),
-//       format.simple()
-//     )
-//   }));
-// }
 
 /* Services */
 const Headers = (
@@ -107,9 +93,10 @@ const makeQuerySearch = (para) => {
   const query = (
     Headers +
     `SELECT ?title ?id WHERE ` +
-    `{ ?m rdf:type dbo:Film; rdfs:label ?title; dbo:wikiPageID ?id. `+
+    `{ ?m rdf:type dbo:Film; rdfs:label ?title; dbo:wikiPageID ?id. ` +
     `FILTER (lcase(str(?title)) like '%${para}%') ` +
-    `FILTER langMatches(lang(?title),"en")} LIMIT 20`);
+    `FILTER langMatches(lang(?title),"en") `
+    `} LIMIT 50`);
   return query;
 }
 
@@ -119,6 +106,7 @@ const makeQueryActor = (para) => {
     `SELECT ?idactor ?name ?movietitle ?idmovie ?thumb WHERE {` +
     `?actor ^dbo:starring ?movie; dbo:wikiPageID ?idactor; foaf:name ?name; dbo:thumbnail ?thumb. ` +
     `?movie  rdfs:label ?movietitle; dbo:wikiPageID ?idmovie. ` +
+    `FILTER langMatches(lang(?actorname),"en") ` +
     `FILTER langMatches(lang(?movietitle),"en") ` +
     `FILTER (?idactor = ${para}) ` +
     `} ` +
@@ -134,6 +122,7 @@ const makeQueryDirector = (para) => {
     `?direct foaf:name ?directname; dbo:wikiPageID ?iddirect; foaf:name ?name; dbo:thumbnail ?thumb. ` +
     `?movie  rdfs:label ?movietitle; dbo:wikiPageID ?idmovie. ` +
     `FILTER langMatches(lang(?movietitle),"en") ` +
+    `FILTER langMatches(lang(?directname),"en") ` +
     `FILTER(?iddirect = ${para}) `
     `} ` +
     `LIMIT 100`);
@@ -144,11 +133,14 @@ const makeQueryFilm = (para) => {
   const query = (
     Headers +
     `SELECT ?id ?title ?year ?directname ?iddirect ?runtime ?gross ?idact ?actorname ?country WHERE {` +
-    `?actor ^dbo:starring ?movie; dbo:wikiPageID ?idact; rdfs:label ?actorname . `+
-    `?direct dbo:wikiPageID ?iddirect; foaf:name ?directname . `+
+    `?actor ^dbo:starring ?movie; dbo:wikiPageID ?idact; rdfs:label ?actorname . ` +
+    `?direct dbo:wikiPageID ?iddirect; foaf:name ?directname . ` +
     `?movie dbpedia2:recorded ?year ; dbo:wikiPageID ?id ; rdf:type dbo:Film ; dbpedia2:country ?country ; dbo:director ?direct ; dbo:runtime ?runtime ; dbo:gross ?gross ; rdfs:label ?title . ` +
     `FILTER(?id = ${para}) ` +
-    `} LIMIT 10 `);
+    `FILTER langMatches(lang(?title),"en") ` +
+    `FILTER langMatches(lang(?actorname),"en") ` +
+    `FILTER langMatches(lang(?directname),"en") ` +
+    `} LIMIT 100 `);
   return query;
 }
 
