@@ -34,20 +34,20 @@ const logger = createLogger({
 
 /* Static File Declaration */
 
-app.use(express.static(path.join(__dirname, '../client/build')));
+app.use(express.static(path.join(__dirname, '../client/public')));
 
 /* Routes */
 
-app.get('/api/search/:text', async (req, res) => {
-  console.log(req.params.text);
-  const query = makeQuerySearch(req.params.text);
+app.get('/api/search', async (req, res) => {
+  console.log(req.query.title);
+  // Filters
+  //
+  const query = makeQuerySearch(req.query.title);
   const results = await getResults(query);
   res.send(results);
 })
 
-app.get('/api/details/:type/:text', async (req, res) => {
-  console.log(req.params.text);
-  console.log(req.params.type);
+app.get('/api/details/:type/:text', async (req, res, next) => {
   const query = '';
   switch (req.params.type) {
     case 'director':
@@ -60,31 +60,31 @@ app.get('/api/details/:type/:text', async (req, res) => {
       query = makeQueryFilm(req.params.text);
       break;
     default:
-      throw('Request not found')
-  }
+      res.status(404)
+      res.json({error : 'Request not found'});
+      return null;
+    }
   const results = await getResults(query);
   res.send(results);
 })
 
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, '../client/build')));
-  //
-  app.get('/*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../client/build/index.html'));
-  })
-} else {
-  app.get('/*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../client/public/index.html'));
-  })
-  logger.add(new transports.Console({
-    format: format.combine(
-      format.colorize(),
-      format.simple()
-    )
-  }));
-}
-
-
+// if (process.env.NODE_ENV === 'production') {
+//   app.use(express.static(path.join(__dirname, '../client/build')));
+//   //
+//   app.get('/*', (req, res) => {
+//     res.sendFile(path.join(__dirname, '../client/build/index.html'));
+//   })
+// } else {
+//   app.get('/*', (req, res) => {
+//     res.sendFile(path.join(__dirname, '../client/public/index.html'));
+//   })
+//   logger.add(new transports.Console({
+//     format: format.combine(
+//       format.colorize(),
+//       format.simple()
+//     )
+//   }));
+// }
 
 /* Services */
 const Headers = (
@@ -104,7 +104,11 @@ const Headers = (
 const makeQuerySearch = (para) => {
   const query = (
     Headers +
-    `SELECT ?n ?id WHERE { ?m rdf:type dbo:Film; rdfs:label ?n; dbo:wikiPageID ?id. FILTER(?n like '%${para}%')} LIMIT 10`);
+    `SELECT ?title ?id WHERE ` +
+    `{ ?m rdf:type dbo:Film; rdfs:label ?title; dbo:wikiPageID ?id. `+
+    `FILTER (lcase(str(?title)) like '%${para}%') ` +
+    `FILTER langMatches(lang(?title),"en"))} LIMIT 20`);
+    console.log(query)
   return query;
 }
 
@@ -118,14 +122,18 @@ const makeQueryActor = (para) => {
 const makeQueryDirector = (para) => {
   const query = (
     Headers +
-    `SELECT ?n ?id WHERE { ?m rdf:type dbo:Film; rdfs:label ?n; dbo:wikiPageID ?id. FILTER(?n like '%${para}%')} LIMIT 10`);
+    `SELECT ?n ?id WHERE ` +
+    `{ ?m rdf:type dbo:Film; rdfs:label ?n; dbo:wikiPageID ?id. `+
+    `FILTER(?n like '%${para}%')} LIMIT 10`);
   return query;
 }
 
 const makeQueryFilm = (para) => {
   const query = (
     Headers +
-    `SELECT ?n ?id WHERE { ?m rdf:type dbo:Film; rdfs:label ?n; dbo:wikiPageID ?id. FILTER(?n like '%${para}%')} LIMIT 10`);
+    `SELECT ?id ?title ?year ?directname ?iddirect ?runtime ?gross ?idact ?actorname ?country WHERE ` +
+    `{ ?actor ^dbo:starring ?movie; dbo:wikiPageID ?idact; rdfs:label ?actorname .`+
+    `FILTER(?n like '%${para}%')} LIMIT 10`);
   return query;
 }
 
