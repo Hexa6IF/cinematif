@@ -16,14 +16,6 @@ http://www.templatemo.com/tm-499-catalyst
 </head>
 
 <body>
-<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-<script src="request.js"></script>
-<script>
-
-    // Write current year in copyright text.
-    document.getElementsByClassName("tm-current-year").value = new Date().getFullYear();
-    getMovies('mem'); //test
-</script>
     <div class="container">
         <section class="col-md-12 content" id="home">
            <div class="col-md-12 content-item tm-black-translucent-bg tm-logo-box">
@@ -39,13 +31,11 @@ http://www.templatemo.com/tm-499-catalyst
           <h2 class="main-title text-center dark-blue-text">Search movie title</h2>
 <table class="search-box" >
     <tbody ><tr>
-        <td class="input-movie" id="search-movie-input">  <input type="text" class="input-movie" name="fname" placeholder="Enter a movie"></td>
-        <td><button onclick="getMovies('tita')" class="style-button pull-right">search</button></td>
+        <td class="input-movie" >  <input type="text" class="input-movie" name="fname" placeholder="Enter a movie"></td>
+        <td ><button class="style-button pull-right">search</button></td>
     </tr>
 </tbody></table>
            
-           <p>In dapibus blandit congue. Sed quam nulla, pellentesque eget metus eu, sollicitudin sodales nisl. Integer tempus id lectus quis cursus.</p>
-           <button type="button" class="btn btn-big pull-right tm-btn-primary">Read More</button>
        </div>
        
 
@@ -62,7 +52,11 @@ http://www.templatemo.com/tm-499-catalyst
 
       <div class="tm-float-section-body tm-white-bg">
         <div class="col-lg-12">
-          <ul class="col-md-4 col-lg-4" id="movie-search-results">
+          
+          
+          <ul class="col-md-4 col-lg-4">
+            <li></li>
+            <li>Curabitur ornare pulvinar sapien, accumsan malesuada mauris ultricies non. Sed id tempor arcu. Pellentesque tortor sapien, molestie at purus vitae, blandit pretium dolor.</li>
           </ul>
         </div>
       </div>
@@ -81,6 +75,11 @@ http://www.templatemo.com/tm-499-catalyst
     </div>
 </div>
 
+<script>
 
+// Write current year in copyright text.
+  document.getElementsByClassName("tm-current-year").value = new Date().getFullYear();
+
+</script>
 
 </body></html>
