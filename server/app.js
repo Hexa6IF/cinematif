@@ -95,7 +95,7 @@ const makeQuerySearch = (para) => {
     `SELECT ?title ?id WHERE ` +
     `{ ?m rdf:type dbo:Film; rdfs:label ?title; dbo:wikiPageID ?id. ` +
     `FILTER (lcase(str(?title)) like '%${para}%') ` +
-    `FILTER langMatches(lang(?title),"en") `
+    `FILTER langMatches(lang(?title),"en") ` +
     `} LIMIT 50`);
   return query;
 }
@@ -123,7 +123,7 @@ const makeQueryDirector = (para) => {
     `?movie  rdfs:label ?movietitle; dbo:wikiPageID ?idmovie. ` +
     `FILTER langMatches(lang(?movietitle),"en") ` +
     `FILTER langMatches(lang(?directname),"en") ` +
-    `FILTER(?iddirect = ${para}) `
+    `FILTER(?iddirect = ${para}) ` +
     `} ` +
     `LIMIT 100`);
   return query;
