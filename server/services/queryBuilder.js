@@ -34,17 +34,19 @@ const searchQuery = (para, filters) => {
 const actorQuery = (para) => {
   return (
     prefixes +
-    `SELECT ?idactor ?actorname ?movietitle ?idmovie ?thumb WHERE {` +
+    `SELECT ?idactor ?actorname ?abstract ?movietitle ?idmovie ?thumb WHERE {` +
     `?actor dbo:wikiPageID ?idactor; `+
     `foaf:name ?actorname; ` +
     `^dbo:starring ?movie. ` +
 
     `OPTIONAL { ?actor dbo:thumbnail ?thumb }. ` +
+    `OPTIONAL { ?actor dbo:asbtract ?abstract }. ` +
 
     `?movie a dbo:Film ; ` +
     `rdfs:label ?movietitle ; ` +
     `dbo:wikiPageID ?idmovie . ` +
 
+    `FILTER langMatches(lang(?abstract), "en") ` +
     `FILTER langMatches(lang(?actorname),"en") ` +
     `FILTER langMatches(lang(?movietitle),"en") ` +
     `FILTER (?idactor = ${para}) ` +
@@ -55,7 +57,7 @@ const actorQuery = (para) => {
 const directorQuery = (para) => {
   return (
     prefixes +
-    `SELECT ?iddirect ?directname ?movietitle ?idmovie ?thumb WHERE { ` +
+    `SELECT ?iddirect ?directname ?abstract ?movietitle ?idmovie ?thumb WHERE { ` +
 
     `?direct foaf:name ?directname ; ` +
     `dbo:wikiPageID ?iddirect ; ` +
@@ -63,13 +65,15 @@ const directorQuery = (para) => {
     `^dbo:director ?movie. ` +
 
     `OPTIONAL { ?direct dbo:thumbnail ?thumb }. ` +
-
+    `OPTIONAL { ?direct dbo:asbtract ?abstract }. ` +
+    
     `?movie a dbo:Film ; ` +
-    `rdfs:label ?movietitle ; ` +
+    `rdfs:label ?mctovietitle ; ` +
     `dbo:wikiPageID ?idmovie . ` +
 
-    `FILTER langMatches(lang(?movietitle),"en") ` +
-    `FILTER langMatches(lang(?directname),"en") ` +
+    `FILTER langMatches(lang(?abstract), "en") ` +
+    `FILTER langMatches(lang(?movietitle), "en") ` +
+    `FILTER langMatches(lang(?directname), "en") ` +
     `FILTER(?iddirect = ${para}) ` +
     `} ` +
     `LIMIT 100`);
@@ -78,7 +82,7 @@ const directorQuery = (para) => {
 const filmQuery = (para) => {
   return (
     prefixes +
-    `SELECT ?idmovie ?movietitle ?year ?directname ?iddirect ?runtime ?gross ?idact ?actorname ?country WHERE {` +
+    `SELECT ?idmovie ?movietitle ?abstract ?year ?directname ?iddirect ?runtime ?gross ?idact ?actorname ?country WHERE {` +
     `?movie dbo:wikiPageID ?idmovie ; ` +
     `rdf:type dbo:Film ; ` +
     `rdfs:label ?movietitle . ` +
@@ -87,12 +91,14 @@ const filmQuery = (para) => {
     `OPTIONAL { ?movie dbpedia2:country ?country }. ` +
     `OPTIONAL { ?movie dbo:runtime ?runtime }. ` +
     `OPTIONAL { ?movie dbo:gross ?gross }. ` +
+    `OPTIONAL { ?movie dbo:abstract ?abstract }. ` +
 
     `OPTIONAL { ?actor ^dbo:starring ?movie ; dbo:wikiPageID ?idact ; rdfs:label ?actorname . }. ` +
     `OPTIONAL { ?direct ^dbo:director ?movie ; dbo:wikiPageID ?iddirect ; rdfs:label ?directname . }. ` +
 
     `FILTER(?idmovie = ${para}) ` +
     `FILTER langMatches(lang(?movietitle),"en") ` +
+    `FILTER langMatches(lang(?abstract), "en") ` +
     `FILTER langMatches(lang(?actorname),"en") ` +
     `FILTER langMatches(lang(?directname),"en") ` +
     `} LIMIT 100 `);
