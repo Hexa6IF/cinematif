@@ -1,0 +1,9 @@
+.is-wrapped {
+    white-space: normal;
+}
+
+.is-sticky-column {
+    position: sticky;
+    top: 30px;
+    margin: 10% auto;
+}

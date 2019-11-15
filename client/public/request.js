@@ -50,7 +50,7 @@ async function renderMovieDetails(responseData) {
     document.getElementById("movie-title").innerHTML = bindings.movietitle.value;
 
     bindings.runtime !== undefined ?
-        document.getElementById("movie-runtime").innerText = bindings.runtime.value : document.getElementById("movie-runtime").innerText = "Not found";
+        document.getElementById("movie-runtime").innerText = (bindings.runtime.value/3600).toFixed(1) + ' hours': document.getElementById("movie-runtime").innerText = "Not found";
     let actorList = document.getElementById("actor-list");
     if (bindings.actors.length > 0) {
         for (let i = 0; i < bindings.actors.length; i++) {
@@ -78,13 +78,14 @@ async function renderMovieDetails(responseData) {
         directorList.innerText = "Not found";
     }
     bindings.year !== undefined ?
-        document.getElementById("year").innerText = bindings.year.value : document.getElementById("year-container").style.display = "none";
+        // document.getElementById("year").innerText = bindings.year.value : document.getElementById("year-container").style.display = "none";
+        document.getElementById("year").innerText = bindings.year.value : null;
     bindings.gross !== undefined ?
-        document.getElementById("gross").innerText = bindings.gross.value : document.getElementById("gross").innerText = "Not found";
+        document.getElementById("gross").innerText = '$' + Number(bindings.gross.value) : null;
     bindings.country !== undefined ?
-        document.getElementById("original-country").innerText = bindings.country.value : document.getElementById("original-country").innerText = "Not found";
+        document.getElementById("original-country").innerText = bindings.country.value : null;
     bindings.abstract !== undefined ?
-        document.getElementById("description").innerText = bindings.abstract.value : document.getElementById("description").innerText = "Not found";
+        document.getElementById("description").innerText = bindings.abstract.value : null;
 }
 
 function getActor(actorId)

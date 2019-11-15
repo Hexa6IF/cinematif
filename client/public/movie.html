@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="en"><head>
+<html lang="en">
+
+<head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -7,74 +9,132 @@
     <link rel="stylesheet" type="text/css" href="Font-Awesome-4.7/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="css/templatemo-style-movie.css">
+    <link rel="stylesheet" type="text/css" href="css/custom.css">
     <title>Cin'IFile</title>
 
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    <script src="request.js"></script>
-    <script src="posters.js"></script>
 </head>
 
 <body>
- <nav>
- <a onclick="window.location.href=baseUrl"><img class="img-resizable" src="images/logo_transparent.png"/></a>
- <h1 class="text-uppercase">Cin'IFile</h1>
-</nav> 
-<div class="left-panel">
-	<img id="img-movie" class="affiche-film" src="" ></img>
-</div>
-<div class="right-panel">
-<h1 class="title" id="movie-title">Movie
-</h1>
-<div class="info-container">
-<h3 id="description">
-	Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-</h3>
-<h3>Movie runtime : </h3>
-<h3 id="movie-runtime">
-	0
-</h3>
-</div>
-<div class="info-container" id="year-container">
-<h3>Year : </h3>
-<h3 id="year">
-	0
-</h3>
-</div>
-<div class="info-container">
-<h3>Director : </h3>
-<h3>
-    <ul id="director-list">
-        <li>
-        </li>
-    </ul>
-</h3>
-</div>
-<div class="info-container">
-<h3>Gross : </h3>
-<h3 id="gross">
-	0
-</h3>
-</div>
-<div class="info-container">
-<h3>Country : </h3>
-<h3 id="original-country">
-	0
-</h3>
-</div>
-<ul id="actor-list">
-Cast : 
-<li>
-</li>
-</ul>
-</div>
-<script>
-    const baseUrl = window.location.protocol+'//'+window.location.host;
-    let queryString = window.location.search;
-    const movieId = queryString.substring(queryString.indexOf('id=')+3);
-    getMovieDetails(movieId);
-// Write current year in copyright text.
-  document.getElementsByClassName("tm-current-year").value = new Date().getFullYear();
+    <nav>
+        <a onclick="window.location.href=baseUrl"><img class="img-resizable" src="images/logo_transparent.png" /></a>
+        <h1 class="text-uppercase">Cin'IFile</h1>
+    </nav>
 
-</script>
+    <div class=container>
 
-</body></html>
+        <div class="row">
+            <div class="col-md-4 is-sticky-column">
+                <img id="img-movie" class="affiche-film" src="" />
+            </div>
+            <div class="col-md-8">
+                <div class=container>
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h1 class="title text-center" id="movie-title">Movie</h1>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-8">
+                            <p id="description" class="is-wrapped text-justify">
+                                Unavailable
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <p>Movie runtime : </p>
+                            <p id="movie-runtime">
+                                Unavailable
+                            </p>
+                        </div>
+                        <div id="year-container" class="col-md-2">
+                            <p >Release year : </p>
+                            <p id="year">
+                                Unavailable
+                            </p>
+                        </div>
+                        <div class="col-md-4">
+                            <p>Director(s) : </p>
+                            <ul id="director-list">
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <p>Gross : </p>
+                            <p id="gross">
+                                Unavailable
+                            </p>
+                        </div>
+                        <div class="col-md-2">
+                            <p>Country : </p>
+                            <p id="original-country">
+                                Unavailable
+                            </p>
+                        </div>
+                        <div class="col-md-4">
+                            <p>Cast : </p>
+                            <ul id="actor-list">
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- <div class="info-container">
+        <p id="description" class="is-wrapped text-justify">
+            Unavailable
+        </p>
+        <p>Movie runtime : </p>
+        <p id="movie-runtime">
+            Unavailable
+        </p>
+    </div>
+    <div class="info-container" id="year-container">
+        <p>Year : </p>
+        <p id="year">
+            Unavailable
+        </p>
+    </div>
+    <div class="info-container">
+        <p>Director(s) : </p>
+        <p>
+            <ul id="director-list">
+                <li>
+                </li>
+            </ul>
+        </p>
+    </div> -->
+    <!-- <div class="info-container">
+        <p>Gross : </p>
+        <p id="gross">
+            Unavailable
+        </p>
+    </div>
+    <div class="info-container">
+        <p>Country : </p>
+        <p id="original-country">
+            Unavailable
+        </p>
+    </div>
+    <div class="info-container">
+        <ul id="actor-list">
+            Cast :
+            <li>
+            </li>
+        </ul>
+    </div> -->
+    <!-- <script>
+        // const baseUrl = window.location.protocol + '//' + window.location.host;
+        // let queryString = window.location.search;
+        // const movieId = queryString.substring(queryString.indexOf('id=') + 3);
+        // getMovieDetails(movieId);
+    </script> -->
+    <script defer src="request.js"></script>
+    <script defer src="posters.js"></script>
+    <script defer src="movie.js"></script>
+</body>
+
+</html>

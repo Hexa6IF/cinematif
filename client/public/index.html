@@ -1,5 +1,7 @@
- <!DOCTYPE html>
-<html lang="en"><head>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -8,75 +10,72 @@
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="css/templatemo-style.css">
     <title>Cin'IFile</title>
-    
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script defer src="request.js"></script>
-<!--
-Catalyst Template
-http://www.templatemo.com/tm-499-catalyst
--->
+    <script defer src="posters.js"></script>
+    <!--
+        Catalyst Template
+        http://www.templatemo.com/tm-499-catalyst
+    -->
 </head>
-<body >
+
+<body>
     <div class="container">
         <section class="col-md-12 content" id="home">
-           <div class="col-md-12 content-item tm-black-translucent-bg tm-logo-box">
-             <img src="images/logo_transparent.png"/>
-              <h1 class="text-uppercase">Cin'IFile</h1>
-           </div>
+            <div class="col-md-12 content-item tm-black-translucent-bg tm-logo-box">
+                <img src="images/logo_transparent.png" />
+                <h1 class="text-uppercase">Cin'IFile</h1>
+            </div>
         </section>
-       <section class="col-md-12 content padding tm-equal-col-container" id="services">
-        <div class="col-md-12 col-sm-12 content-item tm-black-translucent-bg tm-services-section-padding">
-          <h2 class="main-title text-center dark-blue-text">Search movie title</h2>
-<table class="search-box" >
-    <tbody ><tr>
-        <td class="input-movie" >  <input id="search-movie-input" type="text" class="input-movie" name="fname" placeholder="Enter a movie"></td>
-        <td ><button onclick="getMovies(document.getElementById('search-movie-input').value)" class="style-button pull-right">search</button></td>
-    </tr>
-</tbody></table>
-           
-       </div>
-       
 
-      </section>
+        <section class="col-md-12 content padding tm-equal-col-container" id="services">
+            <div class="col-md-12 col-sm-12 content-item tm-black-translucent-bg tm-services-section-padding">
+                <h2 class="main-title text-center dark-blue-text">Search by movie title</h2>
+                <table class="search-box">
+                    <tbody>
+                        <tr>
+                            <td class="input-movie"> <input id="search-movie-input" type="text" class="input-movie"
+                                    name="fname" placeholder="Enter a movie"></td>
+                            <td><button onclick="getMovies(document.getElementById('search-movie-input').value)"
+                                    class="style-button pull-right">Search</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
 
-      <section class="col-md-12 content padding tm-float-section tm-section-3">
-
-      <div class="col-md-12 content-item tm-black-translucent-bg tm-movies-section-padding">
-      
-      <div class="tm-float-section-header">
-        <h2 class="text-center tm-white-text tm-section-3-header">Liste films</h2>  
-      </div>
-
-      <div class="tm-float-section-body tm-white-bg">
-        <div class="">
-            <ul class="" id="movie-search-results">
-            </ul>
-        </div>
-      </div>
-        </div>
-      </section>
-
-</div>
-
-<div class="text-center footer">
-	<div class="container">
-		Copyright © <span class="tm-current-year">2017</span> Company 
-        
-        | Design: TemplateMo
+        <section class="col-md-12 content padding tm-float-section">
+            <div class="col-md-12 content-item tm-black-translucent-bg tm-movies-section-padding">
+                <div class="tm-float-section-header">
+                    <h2 class="text-center tm-white-text tm-section-3-header">Movies list</h2>
+                </div>
+                <div class="tm-float-section-body tm-white-bg">
+                    <div class="">
+                        <ul class="" id="movie-search-results">
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
     </div>
-</div>
+
+    <div class="text-center footer">
+        <div class="container">
+            Design by: TemplateMo
+        </div>
+    </div>
+
     <script>
         //events
-        document.getElementById('search-movie-input').addEventListener('keypress', e =>
-        {
-            if (e.key === 'Enter'){
+        document.getElementById('search-movie-input').addEventListener('keypress', e => {
+            if (e.key === 'Enter') {
                 getMovies(document.getElementById('search-movie-input').value);
             }
         });
 
         // Write current year in copyright text.
-        document.getElementsByClassName("tm-current-year").value = new Date().getFullYear();
-</script>
+        // document.getElementsByClassName("tm-current-year").value = new Date().getFullYear();
+    </script>
 </body>
+
 </html>
-	
