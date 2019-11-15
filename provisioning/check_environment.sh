@@ -33,8 +33,5 @@ success_message() {
 
 check_program docker
 check_program docker-compose
-check_file .env
-copy_file .env ./client/.env
-copy_file .env ./server/.env
 
 success_message
