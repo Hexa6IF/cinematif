@@ -15,7 +15,8 @@ const getPosterPathFromName = async (name) => {
     let posterPath = null;
     try {
         const encodedUrl = encodeURI(url)
-        const json = await fetch(encodedUrl).json()
+        const data = await fetch(encodedUrl)
+        const json = await data.json()
         if (json.results && json.results.length) {
             posterPath = json.results[0].poster_path
             if (!posterPath) {

@@ -37,6 +37,8 @@ function getMovieDetails(movieId) {
     const movieUrl = '/detail/film/' + movieId;
     try {
         $.getJSON(serverUrl + movieUrl, function (responseData) {
+            console.log(serverUrl + movieUrl);
+            console.log(responseData);
             renderMovieDetails(responseData);
         });
     } catch (e) {
@@ -44,9 +46,12 @@ function getMovieDetails(movieId) {
     }
 }
 
-function renderMovieDetails(responseData) {
+async function renderMovieDetails(responseData) {
+    console.log(responseData.results);
     let arrayBindings = responseData.results.bindings;
     console.log(arrayBindings);
+    console.log(arrayBindings[0].movietitle.value);
+    document.getElementById("img-movie").setAttribute('src', await getPosterPathFromName(arrayBindings[0].movietitle.value));
 }
 
 function getActor(actorId)
