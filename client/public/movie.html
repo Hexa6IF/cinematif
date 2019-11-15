@@ -16,8 +16,7 @@
 
 <body>
  <nav>
- 
- <a href="http://localhost:5000"><img class="img-resizable" src="images/logo_transparent.png"/></a>
+ <a onclick="window.location.href=baseUrl"><img class="img-resizable" src="images/logo_transparent.png"/></a>
  <h1 class="text-uppercase">Cin'IFile</h1>
 </nav> 
 <div class="left-panel">
@@ -73,6 +72,7 @@ Cast :
 </ul>
 </div>
 <script>
+    const baseUrl = window.location.protocol+'//'+window.location.host;
     let queryString = window.location.search;
     const movieId = queryString.substring(queryString.indexOf('id=')+3);
     getMovieDetails(movieId);
