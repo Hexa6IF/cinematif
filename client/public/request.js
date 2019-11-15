@@ -1,5 +1,6 @@
 const serverUrl = 'http://localhost:5000/api';
 const clientUrl = 'http://localhost:5000';
+const getPosterPathFromName = require('./posters').getPosterPathFromName;
 
 function getMovies(movieSearch) {
     movieSearch = movieSearch.toLowerCase();

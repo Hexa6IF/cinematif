@@ -7,7 +7,10 @@
     <link rel="stylesheet" type="text/css" href="Font-Awesome-4.7/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="css/templatemo-style-movie.css">
-    <title>Cin'IFile</title>	
+    <title>Cin'IFile</title>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="request.js"></script>
 </head>
 
 <body>
@@ -45,7 +48,9 @@
 	0
 </div>
 <script>
-
+    let queryString = window.location.search;
+    const movieId = queryString.substring(queryString.indexOf('id=')+3);
+    getMovieDetails(movieId);
 // Write current year in copyright text.
   document.getElementsByClassName("tm-current-year").value = new Date().getFullYear();
 
