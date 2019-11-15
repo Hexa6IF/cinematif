@@ -108,8 +108,7 @@ p {
     margin-bottom: 30px;
 }
 .search-box { 
-    margin-left: 80px;
-    margin-right: 80px;	
+    max-width: 35em;
 }
 .input-movie{
 	width: 100%;

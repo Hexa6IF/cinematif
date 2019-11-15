@@ -9,6 +9,7 @@
     <link rel="stylesheet" type="text/css" href="Font-Awesome-4.7/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="css/templatemo-style.css">
+    <link rel="stylesheet" type="text/css" href="css/custom.css">
     <title>Cin'IFile</title>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script defer src="request.js"></script>
@@ -29,9 +30,9 @@
         </section>
 
         <section class="col-md-12 content padding tm-equal-col-container" id="services">
-            <div class="col-md-12 col-sm-12 content-item tm-black-translucent-bg tm-services-section-padding">
-                <h2 class="main-title text-center dark-blue-text">Search by movie title</h2>
-                <table class="search-box">
+            <div class="col-md-12 col-sm-12 content-item tm-black-translucent-bg tm-services-section-padding is-centered-flex-column">
+                <h2 class="main-title text-center dark-blue-text is-wrapped">Search by movie title</h2>
+                <!-- <table class="search-box">
                     <tbody>
                         <tr>
                             <td class="input-movie"> <input id="search-movie-input" type="text" class="input-movie"
@@ -40,7 +41,19 @@
                                     class="style-button pull-right">Search</button></td>
                         </tr>
                     </tbody>
-                </table>
+                </table> -->
+                <div class='container col-md-8'>
+                    <div class="row justify-content-center no-gutters">
+                        <div class="col-sm-8">
+                            <input id="search-movie-input" type="text" class="input-movie text-center" name="fname"
+                                placeholder="Enter a movie">
+                        </div>
+                        <div class="col-sm-4">
+                            <button onclick="getMovies(document.getElementById('search-movie-input').value)"
+                                class="style-button pull-right">Search</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
 

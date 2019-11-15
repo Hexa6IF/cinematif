@@ -2,8 +2,20 @@
     white-space: normal;
 }
 
-.is-sticky-column {
-    position: sticky;
-    top: 30px;
-    margin: 10% auto;
+.is-centered-flex-column {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.is-padded-flex-column {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 3rem;
+}
+
+.pt-3{
+    padding-top: 3rem;
 }
