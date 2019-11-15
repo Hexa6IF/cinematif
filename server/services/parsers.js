@@ -4,18 +4,23 @@ const getDirectorsAndActors = (results) => {
     const directorMap = new Map()
     const actorMap = new Map()
     results.forEach(result => {
-        const directorKey = result.iddirect.value;
-        const director = {
-            id: result.iddirect,
-            name: result.directname
+        if (result.iddirect) {
+            const directorKey = result.iddirect.value;
+            const director = {
+                id: result.iddirect,
+                name: result.directname
+            };
+            directorMap.set(directorKey, director);
         };
-        const actorKey = result.idact.value;
-        const actor = {
-            id: result.idact,
-            name: result.actorname
-        };
-        directorMap.set(directorKey, director);
-        actorMap.set(actorKey, actor);
+        
+        if (result.idact) {
+            const actorKey = result.idact.value;
+            const actor = {
+                id: result.idact,
+                name: result.actorname
+            };
+            actorMap.set(actorKey, actor);
+        };        
     });
     return ({
         directors: directorMap,
