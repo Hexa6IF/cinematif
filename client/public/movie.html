@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="Font-Awesome-4.7/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/templatemo-style-movie.css">
+    <title>Cin'IFile</title>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="request.js"></script>
+    <script src="posters.js"></script>
+</head>
+
+<body>
+ <nav>
+ 
+ <a href="file:///C:/Users/PC/Documents/websemant/cinematif/client/public/index.html"><img class="img-resizable" src="images/logo_transparent.png"/></a>   
+ <h1 class="text-uppercase">Cin'IFile</h1>
+</nav> 
+<div class="left-panel">
+	Image
+	<img id="img-movie" src="" ></img>
+	<h1 class="title">
+	Movie
+	</h1>
+	
+</div>
+<div class="right-panel">
+<h1 class="title">Movie
+</h1>
+<div class="info-container">
+<h3 id="description">
+	Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+</h3>
+<h3>Movie runtime : </h3>
+<h3 id="movie-runtime">
+	0
+</h3>
+</div>
+<div class="info-container" id="year-container">
+<h3>Year : </h3>
+<h3 id="year">
+	0
+</h3>
+</div>
+<div class="info-container">
+<h3>Director : </h3>
+<h3>
+    <ul id="director-list">
+        <li>
+        </li>
+    </ul>
+</h3>
+</div>
+<div class="info-container">
+<h3>Gross : </h3>
+<h3 id="gross">
+	0
+</h3>
+</div>
+<div class="info-container">
+<h3>Country : </h3>
+<h3 id="original-country">
+	0
+</h3>
+</div>
+<ul id="actor-list">
+Cast : 
+<li>
+Lopez
+</li>
+</ul>
+</div>
+<script>
+    let queryString = window.location.search;
+    const movieId = queryString.substring(queryString.indexOf('id=')+3);
+    getMovieDetails(movieId);
+// Write current year in copyright text.
+  document.getElementsByClassName("tm-current-year").value = new Date().getFullYear();
+
+</script>
+
+</body></html>

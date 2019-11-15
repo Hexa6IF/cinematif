@@ -1,0 +1,100 @@
+/* 
+
+Catalyst Template
+
+http://www.templatemo.com/tm-499-catalyst
+
+
+
+Pink #cc3467
+
+*/
+
+a,
+a:hover,
+a:focus {
+    text-decoration: none;
+}
+a:focus {
+    outline: none;
+}
+
+body{
+    margin:0;
+  background-color: rgb(35, 48, 62);
+    padding:0;
+   background-repeat:no-repeat;
+    white-space: nowrap; 
+	 background-position:top;
+	vertical-align:bottom;
+    background-size:auto;
+    background-attachment:fixed;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 18px;
+    font-weight:300;
+	color:wheat;
+}
+nav {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  box-shadow: 0px 12px 20px rgba(0,0,0,0.6);
+  max-height:64px;
+}
+img{
+	max-height:100%;
+}
+.img-resizable{
+	float:left;
+	height: 60px;
+	margin: 2px 12px;
+}
+h1{
+	color:white;
+	width:auto;
+}
+h3{
+	white-space: normal;
+	font-size: 24px;
+    float: left;
+    min-width: 40px;
+    margin: 6px;
+}
+.info-container{
+	width:80%;
+	word-wrap: break-word;
+}
+ul 
+{
+	width:100%;
+	margin: 0;
+  padding: 0;
+  overflow: hidden;
+	list-style-type:none;
+}
+
+li a {
+  display: block;
+  color: white;
+  padding: 1px 1px;
+  margin-left:30px;
+  text-decoration: none;
+}
+
+.left-panel {
+	min-height: 400px;
+    width: 40%;
+    float: left;
+    min-width: 300px;
+}
+
+.right-panel {
+	min-height: 400px;
+    width: 60%;
+    float: left;
+}
+
+.text-uppercase {
+	float:left;
+	margin-top:12px;
+}
