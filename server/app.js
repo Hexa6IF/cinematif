@@ -1,8 +1,7 @@
 const express = require('express')
 const app = express();
-const fs = require('file-system');
 const path = require('path');
-const port = process.env.PORT || 5000;
+const port = 5000;
 const dps = require('dbpedia-sparql-client').default;;
 const { createLogger, format, transports } = require('winston');
 
@@ -29,8 +28,12 @@ const logger = createLogger({
     // - Write to all logs with level `info` and below to `combined.log`.
     // - Write all logs error (and below) to `error.log`.
     //
-    new transports.File({ filename: 'error.log', level: 'error' }),
-    new transports.File({ filename: 'combined.log' })
+    new transports.Console({
+      format: format.combine(
+        format.colorize(),
+        format.simple()
+      )
+    })
   ]
 });
 
