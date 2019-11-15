@@ -37,8 +37,6 @@ function getMovieDetails(movieId) {
     const movieUrl = '/detail/film/' + movieId;
     try {
         $.getJSON(serverUrl + movieUrl, function (responseData) {
-            console.log(serverUrl + movieUrl);
-            console.log(responseData);
             renderMovieDetails(responseData);
         });
     } catch (e) {
@@ -47,11 +45,31 @@ function getMovieDetails(movieId) {
 }
 
 async function renderMovieDetails(responseData) {
-    console.log(responseData.results);
-    let arrayBindings = responseData.results.bindings;
-    console.log(arrayBindings);
-    console.log(arrayBindings[0].movietitle.value);
-    document.getElementById("img-movie").setAttribute('src', await getPosterPathFromName(arrayBindings[0].movietitle.value));
+    let bindings = responseData.results.bindings[0];
+    document.getElementById("img-movie").setAttribute('src', await getPosterPathFromName(bindings.movietitle.value));
+    document.getElementById("movie-runtime").innerText = bindings.runtime.value;
+    let actorList = document.getElementById("actor-list");
+    for (let i = 0; i < bindings.actors.length; i++) {
+        let actor = document.createElement("li");
+        let actorDetail = document.createElement("a");
+        //actorDetail.href = clientUrl + movieDetailUrl + '?id=' + arrayBindings[i].idmovie.value;
+        actorDetail.appendChild(document.createTextNode(bindings.actors[i].name.value));
+        actor.appendChild(actorDetail);
+        actorList.appendChild(actor);
+    }
+    let directorList = document.getElementById("director-list");
+    for (let i = 0; i < bindings.directors.length; i++) {
+        let director = document.createElement("li");
+        let directorDetail = document.createElement("a");
+        //actorDetail.href = clientUrl + movieDetailUrl + '?id=' + arrayBindings[i].idmovie.value;
+        directorDetail.appendChild(document.createTextNode(bindings.directors[i].name.value));
+        director.appendChild(directorDetail);
+        directorList.appendChild(director);
+    }
+    bindings.year !== undefined ?
+        document.getElementById("year").innerText = bindings.year : document.getElementById("year").innerText = 'Not found';
+    document.getElementById("gross").innerText = bindings.gross.value;
+    document.getElementById("original-country").innerText = bindings.country.value;
 }
 
 function getActor(actorId)
