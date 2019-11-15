@@ -70,6 +70,7 @@ async function renderMovieDetails(responseData) {
         document.getElementById("year").innerText = bindings.year : document.getElementById("year").innerText = 'Not found';
     document.getElementById("gross").innerText = bindings.gross.value;
     document.getElementById("original-country").innerText = bindings.country.value;
+    document.getElementById("description").innerText = bindings.abstract.value;
 }
 
 function getActor(actorId)
