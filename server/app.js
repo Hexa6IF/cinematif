@@ -6,8 +6,9 @@ const port = process.env.PORT || 5000;
 const dps = require('dbpedia-sparql-client').default;;
 const { createLogger, format, transports } = require('winston');
 
-const cleanFilm = require('./services/parsers').cleanFilm;
-
+const queryBuilder = require('./services/queryBuilder');
+const groupFilms = require('./services/parsers').groupFilms;
+const groupDirectorsActors = require('./services/parsers').groupDirectorsActors;
 
 require('dotenv').config();
 
@@ -43,109 +44,42 @@ app.get('/api/search', async (req, res) => {
   console.log(req.query.title);
   // Filters
   //
-  const query = makeQuerySearch(req.query.title);
+  const query = queryBuilder.searchQuery(req.query.title);
   const results = await getResults(query);
   res.send(results);
 })
 
 app.get('/api/detail/:type/:id', async (req, res, next) => {
   let query = '';
-  let results = null;
+  let grouper = null;
   switch (req.params.type) {
     case 'director':
-      query = makeQueryDirector(req.params.id);
-      results = await getResults(query)
+      query = queryBuilder.directorQuery(req.params.id);
+      grouper = groupFilms;
       break;
     case 'actor':
-      query = makeQueryActor(req.params.id);
-      results = await getResults(query)
+      query = queryBuilder.actorQuery(req.params.id);
+      grouper = groupFilms;
       break;
     case 'film':
-      query = makeQueryFilm(req.params.id);
-      results = await getResults(query)
-      results.results.bindings = cleanFilm(results.results.bindings)
+      query = queryBuilder.filmQuery(req.params.id);
+      grouper = groupDirectorsActors;
       break;
     default:
-      res.status(404)
+      res.status(404);
       res.json({ error: 'Request not found' });
       return null;
   }
-  //const results = await getResults(query);
+  results = await getResults(query, grouper);
   res.send(results);
 })
 
 /* Services */
-const Headers = (
-  'PREFIX dbo: <http://dbpedia.org/ontology/> ' +
-  'PREFIX yago: <http://yago-knowledge.org/resource/> ' +
-  'PREFIX owl: <http://www.w3.org/2002/07/owl#> ' +
-  'PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> ' +
-  'PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> ' +
-  'PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> ' +
-  'PREFIX foaf: <http://xmlns.com/foaf/0.1/> ' +
-  'PREFIX dc: <http://purl.org/dc/elements/1.1/> ' +
-  'PREFIX : <http://dbpedia.org/resource/> ' +
-  'PREFIX dbpedia2: <http://dbpedia.org/property/> ' +
-  'PREFIX dbpedia: <http://dbpedia.org/> ' +
-  'PREFIX skos: <http://www.w3.org/2004/02/skos/core#> ')
-
-const makeQuerySearch = (para) => {
-  const query = (
-    Headers +
-    `SELECT ?title ?id WHERE ` +
-    `{ ?m rdf:type dbo:Film; rdfs:label ?title; dbo:wikiPageID ?id; dbo:starring ?actor. ` +
-    `FILTER (lcase(str(?title)) like '%${para}%') ` +
-    `FILTER langMatches(lang(?title),"en") ` +
-    `} LIMIT 50`);
-  return query;
-}
-
-const makeQueryActor = (para) => {
-  const query = (
-    Headers +
-    `SELECT ?idactor ?name ?movietitle ?idmovie ?thumb WHERE {` +
-    `?actor ^dbo:starring ?movie; dbo:wikiPageID ?idactor; foaf:name ?name; dbo:thumbnail ?thumb. ` +
-    `?movie  rdfs:label ?movietitle; dbo:wikiPageID ?idmovie. ` +
-    `FILTER langMatches(lang(?actorname),"en") ` +
-    `FILTER langMatches(lang(?movietitle),"en") ` +
-    `FILTER (?idactor = ${para}) ` +
-    `} ` +
-    `LIMIT 100`);
-  return query;
-}
-
-const makeQueryDirector = (para) => {
-  const query = (
-    Headers +
-    `SELECT ?iddirect ?name ?movietitle ?idmovie ?thumb WHERE { ` +
-    `?movie dbo:director ?direct. ` +
-    `?direct foaf:name ?directname; dbo:wikiPageID ?iddirect; foaf:name ?name; dbo:thumbnail ?thumb. ` +
-    `?movie  rdfs:label ?movietitle; dbo:wikiPageID ?idmovie. ` +
-    `FILTER langMatches(lang(?movietitle),"en") ` +
-    `FILTER langMatches(lang(?directname),"en") ` +
-    `FILTER(?iddirect = ${para}) ` +
-    `} ` +
-    `LIMIT 100`);
-  return query;
-}
-
-const makeQueryFilm = (para) => {
-  const query = (
-    Headers +
-    `SELECT ?id ?title ?year ?directname ?iddirect ?runtime ?gross ?idact ?actorname ?country WHERE {` +
-    `?actor ^dbo:starring ?movie; dbo:wikiPageID ?idact; rdfs:label ?actorname . ` +
-    `?direct dbo:wikiPageID ?iddirect; foaf:name ?directname . ` +
-    `?movie dbpedia2:recorded ?year ; dbo:wikiPageID ?id ; rdf:type dbo:Film ; dbpedia2:country ?country ; dbo:director ?direct ; dbo:runtime ?runtime ; dbo:gross ?gross ; rdfs:label ?title . ` +
-    `FILTER(?id = ${para}) ` +
-    `FILTER langMatches(lang(?title),"en") ` +
-    `FILTER langMatches(lang(?actorname),"en") ` +
-    `FILTER langMatches(lang(?directname),"en") ` +
-    `} LIMIT 100 `);
-  return query;
-}
-
-const getResults = async (query) => {
-  const response = await dps.client().query(query).timeout(5000).asJson()
+const getResults = async (query, grouper) => {
+  const response = await dps.client().query(query).timeout(5000).asJson();
+  if(grouper){
+    response.results.bindings = grouper(response.results.bindings);
+  }
   return response;
 }
 /* Server */

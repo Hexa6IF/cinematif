@@ -1,42 +1,66 @@
 exports.__esModule = true;
 
-const getDirectorsActors = (results) => {
+const getDirectorsAndActors = (results) => {
     const directorMap = new Map()
     const actorMap = new Map()
     results.forEach(result => {
-        const directorKey = result.iddirect.value
-        const director = { id: result.iddirect, name: result.directname }
-        const actorKey = result.idact.value
-        const actor = { id: result.idact, name: result.actorname }
-        directorMap.set(directorKey, director)
-        actorMap.set(actorKey, actor)
+        const directorKey = result.iddirect.value;
+        const director = {
+            id: result.iddirect,
+            name: result.directname
+        };
+        const actorKey = result.idact.value;
+        const actor = {
+            id: result.idact,
+            name: result.actorname
+        };
+        directorMap.set(directorKey, director);
+        actorMap.set(actorKey, actor);
     });
-    return { directorMap, actorMap }
-}
-
-exports.cleanFilm = (results) => {
-    const maps = getDirectorsActors(results)
-    if (results && results.length) {
-        results = [results[0]]
-        results[0].idact = undefined
-        results[0].iddirect = undefined
-        results[0].directname = undefined
-        results[0].actorname = undefined
-        results[0].actors = Array.from(maps.actorMap.values())
-        results[0].directors = Array.from(maps.directorMap.values())
-    }
-    return results
+    return ({
+        directors: directorMap,
+        actors: actorMap
+    });
 }
 
 const getFilms = (results) => {
-    const filmsMap = new Map()
+    const filmsMap = new Map();
     results.forEach(result => {
-        const directorKey = result.iddirect.value
-        const director = { id: result.iddirect, name: result.directname }
-        const actorKey = result.idact.value
-        const actor = { id: result.idact, name: result.actorname }
-        directorMap.set(directorKey, director)
-        actorMap.set(actorKey, actor)
+        const filmKey = result.idmovie.value;
+        const film = {
+            id: result.idmovie,
+            name: result.movietitle
+        };
+        filmsMap.set(filmKey, film);
     });
-    return { directorMap, actorMap }
+    return filmsMap;
+}
+
+exports.groupDirectorsActors = (results) => {
+    let result = [];
+    if (results && results.length) {
+        const maps = getDirectorsAndActors(results);
+        result = results[0];
+        delete result.idact;
+        delete result.actorname;
+        delete result.iddirect;
+        delete result.directname;
+        result = Object.assign(result, {
+            actors: Array.from(maps.actors.values()),
+            directors: Array.from(maps.directors.values())
+        });
+    }
+    return [result];
+}
+
+exports.groupFilms = (results) => {
+    let result = [];
+    if (results && results.length) {
+        const filmsMap = getFilms(results);
+        result = results[0];
+        delete result.idmovie;
+        delete result.movietitle;
+        result = Object.assign(result, { films: Array.from(filmsMap.values()) });
+    }
+    return [result];
 }
