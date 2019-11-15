@@ -1,5 +1,5 @@
-const serverUrl = 'http://localhost:5000/api';
-const clientUrl = 'http://localhost:5000';
+const serverUrl = '/api';
+const clientUrl = '';
 
 function getMovies(movieSearch) {
     movieSearch = movieSearch.toLowerCase();
