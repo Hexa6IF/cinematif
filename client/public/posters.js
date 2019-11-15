@@ -1,5 +1,3 @@
-exports.__esModule = true;
-
 const apikey = 'bc6fbc388b90c6a7b4fa85194584a2cb';
 
 const stripMovieName = (rawName) => {
@@ -32,5 +30,3 @@ const getPosterPathFromName = async (name) => {
     posterPath = 'https://image.tmdb.org/t/p/original/' + posterPath;
     return posterPath
 }
-
-exports.getPosterPathFromName = getPosterPathFromName;

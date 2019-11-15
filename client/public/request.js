@@ -1,6 +1,5 @@
 const serverUrl = 'http://localhost:5000/api';
 const clientUrl = 'http://localhost:5000';
-const getPosterPathFromName = require('./posters').getPosterPathFromName;
 
 function getMovies(movieSearch) {
     movieSearch = movieSearch.toLowerCase();
@@ -27,17 +26,17 @@ function renderSearchResult(responseData) {
     for (let i = 0; i < arrayBindings.length; i++) {
         let movie = document.createElement("li");
         let movieDetail = document.createElement("a");
-        movieDetail.href = clientUrl + movieDetailUrl + '?id=' + arrayBindings[i].id.value;
-        movieDetail.appendChild(document.createTextNode(arrayBindings[i].title.value));
+        movieDetail.href = clientUrl + movieDetailUrl + '?id=' + arrayBindings[i].idmovie.value;
+        movieDetail.appendChild(document.createTextNode(arrayBindings[i].movietitle.value));
         movie.appendChild(movieDetail);
         list.appendChild(movie);
     }
 }
 
 function getMovieDetails(movieId) {
-    const movieUrl = serverUrl + '/detail/film/' + movieId;
+    const movieUrl = '/detail/film/' + movieId;
     try {
-        $.getJSON(movieUrl, function (responseData) {
+        $.getJSON(serverUrl + movieUrl, function (responseData) {
             renderMovieDetails(responseData);
         });
     } catch (e) {
@@ -52,9 +51,9 @@ function renderMovieDetails(responseData) {
 
 function getActor(actorId)
 {
-    const actorUrl = serverUrl + '/detail/actor/' + actorId;
+    const actorUrl = '/detail/actor/' + actorId;
     try {
-        $.getJSON(actorUrl, function (responseData) {
+        $.getJSON(serverUrl + actorUrl, function (responseData) {
             renderActorDetails();
         });
     } catch (e) {
