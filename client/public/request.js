@@ -58,16 +58,20 @@ async function renderMovieDetails(responseData) {
         actorList.appendChild(actor);
     }
     let directorList = document.getElementById("director-list");
-    for (let i = 0; i < bindings.directors.length; i++) {
-        let director = document.createElement("li");
-        let directorDetail = document.createElement("a");
-        //actorDetail.href = clientUrl + movieDetailUrl + '?id=' + arrayBindings[i].idmovie.value;
-        directorDetail.appendChild(document.createTextNode(bindings.directors[i].name.value));
-        director.appendChild(directorDetail);
-        directorList.appendChild(director);
+    if (bindings.directors.length > 0) {
+        for (let i = 0; i < bindings.directors.length; i++) {
+            let director = document.createElement("li");
+            let directorDetail = document.createElement("a");
+            //actorDetail.href = clientUrl + movieDetailUrl + '?id=' + arrayBindings[i].idmovie.value;
+            directorDetail.appendChild(document.createTextNode(bindings.directors[i].name.value));
+            director.appendChild(directorDetail);
+            directorList.appendChild(director);
+        }
+    } else {
+        directorList.innerText = "Not found";
     }
     bindings.year !== undefined ?
-        document.getElementById("year").innerText = bindings.year : document.getElementById("year").innerText = 'Not found';
+        document.getElementById("year").innerText = bindings.year.value : document.getElementById("year-container").style.display = "none";
     document.getElementById("gross").innerText = bindings.gross.value;
     document.getElementById("original-country").innerText = bindings.country.value;
     document.getElementById("description").innerText = bindings.abstract.value;
