@@ -26,6 +26,7 @@ const searchQuery = (para, filters) => {
     `dbo:wikiPageID ?idmovie . ` +
 
     addFilters(filters) +
+    
     `FILTER (lcase(str(?movietitle)) like '%${para}%') ` +
     `FILTER langMatches(lang(?movietitle),"en") ` +
     `} LIMIT 50`);
@@ -40,7 +41,7 @@ const actorQuery = (para) => {
     `^dbo:starring ?movie. ` +
 
     `OPTIONAL { ?actor dbo:thumbnail ?thumb }. ` +
-    `OPTIONAL { ?actor dbo:asbtract ?abstract }. ` +
+    `OPTIONAL { ?actor dbo:abstract ?abstract }. ` +
 
     `?movie a dbo:Film ; ` +
     `rdfs:label ?movietitle ; ` +
@@ -65,10 +66,10 @@ const directorQuery = (para) => {
     `^dbo:director ?movie. ` +
 
     `OPTIONAL { ?direct dbo:thumbnail ?thumb }. ` +
-    `OPTIONAL { ?direct dbo:asbtract ?abstract }. ` +
+    `OPTIONAL { ?direct dbo:abstract ?abstract }. ` +
     
     `?movie a dbo:Film ; ` +
-    `rdfs:label ?mctovietitle ; ` +
+    `rdfs:label ?movietitle ; ` +
     `dbo:wikiPageID ?idmovie . ` +
 
     `FILTER langMatches(lang(?abstract), "en") ` +
@@ -83,24 +84,22 @@ const filmQuery = (para) => {
   return (
     prefixes +
     `SELECT ?idmovie ?movietitle ?abstract ?year ?directname ?iddirect ?runtime ?gross ?idact ?actorname ?country WHERE {` +
-    `?movie dbo:wikiPageID ?idmovie ; ` +
-    `rdf:type dbo:Film ; ` +
-    `rdfs:label ?movietitle . ` +
 
+    `?movie a dbo:Film ; ` +
+    `rdfs:label ?movietitle ; ` +
+    `dbo:wikiPageID ?idmovie . ` +
+    
     `OPTIONAL { ?movie dbpedia2:recorded ?year }. ` +
     `OPTIONAL { ?movie dbpedia2:country ?country }. ` +
     `OPTIONAL { ?movie dbo:runtime ?runtime }. ` +
     `OPTIONAL { ?movie dbo:gross ?gross }. ` +
-    `OPTIONAL { ?movie dbo:abstract ?abstract }. ` +
+    `OPTIONAL { ?movie dbo:abstract ?abstract. FILTER langMatches(lang(?abstract), "en") }. ` +
 
-    `OPTIONAL { ?actor ^dbo:starring ?movie ; dbo:wikiPageID ?idact ; rdfs:label ?actorname . }. ` +
-    `OPTIONAL { ?direct ^dbo:director ?movie ; dbo:wikiPageID ?iddirect ; rdfs:label ?directname . }. ` +
+    `OPTIONAL { ?actor ^dbo:starring ?movie ; dbo:wikiPageID ?idact ; rdfs:label ?actorname. FILTER langMatches(lang(?actorname),"en")}. ` +
+    `OPTIONAL { ?direct ^dbo:director ?movie ; dbo:wikiPageID ?iddirect ; rdfs:label ?directname. FILTER langMatches(lang(?directname),"en")}. ` +
 
     `FILTER(?idmovie = ${para}) ` +
     `FILTER langMatches(lang(?movietitle),"en") ` +
-    `FILTER langMatches(lang(?abstract), "en") ` +
-    `FILTER langMatches(lang(?actorname),"en") ` +
-    `FILTER langMatches(lang(?directname),"en") ` +
     `} LIMIT 100 `);
 }
 
