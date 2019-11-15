@@ -41,13 +41,12 @@ const actorQuery = (para) => {
     `^dbo:starring ?movie. ` +
 
     `OPTIONAL { ?actor dbo:thumbnail ?thumb }. ` +
-    `OPTIONAL { ?actor dbo:abstract ?abstract }. ` +
+    `OPTIONAL { ?actor dbo:abstract ?abstract. FILTER langMatches(lang(?abstract), "en")}. ` +
 
     `?movie a dbo:Film ; ` +
     `rdfs:label ?movietitle ; ` +
     `dbo:wikiPageID ?idmovie . ` +
 
-    `FILTER langMatches(lang(?abstract), "en") ` +
     `FILTER langMatches(lang(?actorname),"en") ` +
     `FILTER langMatches(lang(?movietitle),"en") ` +
     `FILTER (?idactor = ${para}) ` +
@@ -66,13 +65,12 @@ const directorQuery = (para) => {
     `^dbo:director ?movie. ` +
 
     `OPTIONAL { ?direct dbo:thumbnail ?thumb }. ` +
-    `OPTIONAL { ?direct dbo:abstract ?abstract }. ` +
+    `OPTIONAL { ?direct dbo:abstract ?abstract. FILTER langMatches(lang(?abstract), "en")}. ` +
     
     `?movie a dbo:Film ; ` +
     `rdfs:label ?movietitle ; ` +
     `dbo:wikiPageID ?idmovie . ` +
 
-    `FILTER langMatches(lang(?abstract), "en") ` +
     `FILTER langMatches(lang(?movietitle), "en") ` +
     `FILTER langMatches(lang(?directname), "en") ` +
     `FILTER(?iddirect = ${para}) ` +
@@ -88,7 +86,7 @@ const filmQuery = (para) => {
     `?movie a dbo:Film ; ` +
     `rdfs:label ?movietitle ; ` +
     `dbo:wikiPageID ?idmovie . ` +
-    
+
     `OPTIONAL { ?movie dbpedia2:recorded ?year }. ` +
     `OPTIONAL { ?movie dbpedia2:country ?country }. ` +
     `OPTIONAL { ?movie dbo:runtime ?runtime }. ` +
