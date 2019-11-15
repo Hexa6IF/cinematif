@@ -26,6 +26,7 @@ function renderSearchResult(responseData) {
     for (let i = 0; i < arrayBindings.length; i++) {
         let movie = document.createElement("li");
         let movieDetail = document.createElement("a");
+        movieDetail.className = "is-wrapped";
         movieDetail.href = clientUrl + movieDetailUrl + '?id=' + arrayBindings[i].idmovie.value;
         movieDetail.appendChild(document.createTextNode(arrayBindings[i].movietitle.value));
         movie.appendChild(movieDetail);
