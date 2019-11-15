@@ -49,13 +49,17 @@ async function renderMovieDetails(responseData) {
     document.getElementById("img-movie").setAttribute('src', await getPosterPathFromName(bindings.movietitle.value));
     document.getElementById("movie-runtime").innerText = bindings.runtime.value;
     let actorList = document.getElementById("actor-list");
-    for (let i = 0; i < bindings.actors.length; i++) {
-        let actor = document.createElement("li");
-        let actorDetail = document.createElement("a");
-        //actorDetail.href = clientUrl + movieDetailUrl + '?id=' + arrayBindings[i].idmovie.value;
-        actorDetail.appendChild(document.createTextNode(bindings.actors[i].name.value));
-        actor.appendChild(actorDetail);
-        actorList.appendChild(actor);
+    if (bindings.actors.length > 0) {
+        for (let i = 0; i < bindings.actors.length; i++) {
+            let actor = document.createElement("li");
+            let actorDetail = document.createElement("a");
+            //actorDetail.href = clientUrl + movieDetailUrl + '?id=' + arrayBindings[i].idmovie.value;
+            actorDetail.appendChild(document.createTextNode(bindings.actors[i].name.value));
+            actor.appendChild(actorDetail);
+            actorList.appendChild(actor);
+        }
+    } else {
+        actorList.innerText = "Not found";
     }
     let directorList = document.getElementById("director-list");
     if (bindings.directors.length > 0) {
@@ -72,9 +76,12 @@ async function renderMovieDetails(responseData) {
     }
     bindings.year !== undefined ?
         document.getElementById("year").innerText = bindings.year.value : document.getElementById("year-container").style.display = "none";
-    document.getElementById("gross").innerText = bindings.gross.value;
-    document.getElementById("original-country").innerText = bindings.country.value;
-    document.getElementById("description").innerText = bindings.abstract.value;
+    bindings.gross !== undefined ?
+        document.getElementById("gross").innerText = bindings.gross.value : document.getElementById("gross").innerText = "Not found";
+    bindings.country !== undefined ?
+        document.getElementById("original-country").innerText = bindings.country.value : document.getElementById("original-country").innerText = "Not found";
+    bindings.abstract !== undefined ?
+        document.getElementById("description").innerText = bindings.abstract.value : document.getElementById("description").innerText = "Not found";
 }
 
 function getActor(actorId)
