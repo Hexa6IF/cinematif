@@ -47,9 +47,7 @@ function getMovieDetails(movieId) {
 async function renderMovieDetails(responseData) {
     let bindings = responseData.results.bindings[0];
     document.getElementById("img-movie").setAttribute('src', await getPosterPathFromName(bindings.movietitle.value));
-    for (let i =0; i<document.getElementsByClassName("title").length; i++) {
-        document.getElementsByClassName("title")[i].innerHTML = bindings.movietitle.value;
-    }
+    document.getElementById("movie-title").innerHTML = bindings.movietitle.value;
 
     bindings.runtime !== undefined ?
         document.getElementById("movie-runtime").innerText = bindings.runtime.value : document.getElementById("movie-runtime").innerText = "Not found";
