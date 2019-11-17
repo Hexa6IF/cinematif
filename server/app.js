@@ -44,10 +44,9 @@ app.use(express.static(path.join(__dirname, '../client/public')));
 /* Routes */
 
 app.get('/api/search', async (req, res) => {
-  console.log(req.query.title);
   // Filters
   //
-  const query = queryBuilder.searchQuery(req.query.title);
+  const query = queryBuilder.searchQuery(req.query);
   const results = await getResults(query);
   res.send(results);
 })

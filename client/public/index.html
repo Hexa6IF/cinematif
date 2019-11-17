@@ -7,9 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" type="text/css">
     <link rel="stylesheet" type="text/css" href="Font-Awesome-4.7/css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="css/templatemo-style.css">
-    <link rel="stylesheet" type="text/css" href="css/custom.css">
+    <link rel="stylesheet" type="text/css" href="css/index.css">
     <title>Cin'IFile</title>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script defer src="searchMovies.js"></script>
@@ -21,71 +19,42 @@
 </head>
 
 <body>
-    <div class="container">
-        <section class="col-md-12 content" id="home">
-            <div class="col-md-12 content-item tm-black-translucent-bg tm-logo-box">
+    <div class="main-container black-gradient">
+        <div id="main-search" class="sub-container-md vertical-grid vert-center center">
+            <div>
                 <img src="images/logo_transparent.png" />
-                <h1 class="text-uppercase">Cin'IFile</h1>
+                <h1 class="header">Cin'IFile</h1>
             </div>
-        </section>
-
-        <section class="col-md-12 content padding tm-equal-col-container" id="services">
-            <div class="col-md-12 col-sm-12 content-item tm-black-translucent-bg tm-services-section-padding is-centered-flex-column">
-                <h2 class="main-title text-center dark-blue-text is-wrapped">Search by movie title</h2>
-                <!-- <table class="search-box">
-                    <tbody>
-                        <tr>
-                            <td class="input-movie"> <input id="search-movie-input" type="text" class="input-movie"
-                                    name="fname" placeholder="Enter a movie"></td>
-                            <td><button onclick="getMovies(document.getElementById('search-movie-input').value)"
-                                    class="style-button pull-right">Search</button></td>
-                        </tr>
-                    </tbody>
-                </table> -->
-                <div class='container col-md-8'>
-                    <div class="row justify-content-center no-gutters">
-                        <div class="col-sm-8">
-                            <input id="search-movie-input" type="text" class="input-movie text-center" name="fname"
-                                placeholder="Enter a movie">
-                        </div>
-                        <div class="col-sm-4">
-                            <button onclick="getMovies(document.getElementById('search-movie-input').value)"
-                                class="style-button pull-right">Search</button>
-                        </div>
-                    </div>
+            <div id="main-search-bar" class="input-container-md">
+                <input id="search-movie-input" class="input-text" type="text" placeholder="Enter a movie title"/>
+                <div class="">
+                    <button
+                        class="input-btn"
+                        onclick="getMovies(document.getElementById('search-movie-input').value, 12, 1)"
+                        type="button"
+                    >
+                        Search
+                    </button>
                 </div>
             </div>
-        </section>
-
-        <section class="col-md-12 content padding tm-float-section">
-            <div class="col-md-12 content-item tm-black-translucent-bg tm-movies-section-padding">
-                <div class="tm-float-section-header">
-                    <h2 class="text-center tm-white-text tm-section-3-header">Movies list</h2>
-                </div>
-                <div class="tm-float-section-body tm-white-bg">
-                    <div class="">
-                        <ul class="" id="movie-search-results">
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </div>
-
-    <div class="text-center footer">
-        <div class="container">
-            Design by: TemplateMo
         </div>
+        <nav id="side-search">
+            <a href='/'><img class="img-resizable" src="images/logo_transparent.png" /></a>
+            <h1 class="header">Cin'IFile</h1>
+        </nav>
+
+        <ul id="movie-search-results">
+        </ul>
     </div>
+
 
     <script>
         //events
         document.getElementById('search-movie-input').addEventListener('keypress', e => {
             if (e.key === 'Enter') {
-                getMovies(document.getElementById('search-movie-input').value);
+                getMovies(document.getElementById('search-movie-input').value, 12, 1);
             }
         });
-
         // Write current year in copyright text.
         // document.getElementsByClassName("tm-current-year").value = new Date().getFullYear();
     </script>

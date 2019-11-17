@@ -18,7 +18,9 @@ function getMovieDetails(movieId) {
 
 async function renderMovieDetails(responseData) {
   let bindings = responseData.results.bindings[0];
-  document.getElementById("img-movie").setAttribute('src', await getPosterPathFromName(bindings.movietitle.value));
+  try{
+    document.getElementById("img-movie").setAttribute('src', await getPosterPathFromName(bindings.movietitle.value));
+  }catch(e){ }
   document.getElementById("movie-title").innerHTML = bindings.movietitle.value;
   bindings.runtime !== undefined ?
     document.getElementById("movie-runtime").innerText = (bindings.runtime.value/3600).toFixed(1) + ' hours': document.getElementById("movie-runtime").innerText = "Not found";

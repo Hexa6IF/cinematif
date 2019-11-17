@@ -16,7 +16,7 @@ const addFilters = (filters) => {
     return '';
 }
 
-const searchQuery = (para, filters) => {
+const searchQuery = (params, filters) => {
   return (
     prefixes +
     `SELECT DISTINCT ?movietitle ?idmovie WHERE { ` +
@@ -26,13 +26,13 @@ const searchQuery = (para, filters) => {
     `dbo:wikiPageID ?idmovie . ` +
 
     addFilters(filters) +
-    
-    `FILTER (lcase(str(?movietitle)) like '%${para}%') ` +
+
+    `FILTER (lcase(str(?movietitle)) like '%${params.title}%') ` +
     `FILTER langMatches(lang(?movietitle),"en") ` +
-    `} LIMIT 50`);
+    `} LIMIT ${params.size} OFFSET ${params.size*(params.page-1)}`);
 }
 
-const actorQuery = (para) => {
+const actorQuery = (params) => {
   return (
     prefixes +
     `SELECT ?idactor ?actorname ?abstract ?movietitle ?idmovie ?thumb WHERE {` +
@@ -49,12 +49,12 @@ const actorQuery = (para) => {
 
     `FILTER langMatches(lang(?actorname),"en") ` +
     `FILTER langMatches(lang(?movietitle),"en") ` +
-    `FILTER (?idactor = ${para}) ` +
+    `FILTER (?idactor = ${params}) ` +
     `} ` +
     `LIMIT 100`);
 }
 
-const directorQuery = (para) => {
+const directorQuery = (params) => {
   return (
     prefixes +
     `SELECT ?iddirect ?directname ?abstract ?movietitle ?idmovie ?thumb WHERE { ` +
@@ -66,19 +66,19 @@ const directorQuery = (para) => {
 
     `OPTIONAL { ?direct dbo:thumbnail ?thumb }. ` +
     `OPTIONAL { ?direct dbo:abstract ?abstract. FILTER langMatches(lang(?abstract), "en")}. ` +
-    
+
     `?movie a dbo:Film ; ` +
     `rdfs:label ?movietitle ; ` +
     `dbo:wikiPageID ?idmovie . ` +
 
     `FILTER langMatches(lang(?movietitle), "en") ` +
     `FILTER langMatches(lang(?directname), "en") ` +
-    `FILTER(?iddirect = ${para}) ` +
+    `FILTER(?iddirect = ${params}) ` +
     `} ` +
     `LIMIT 100`);
 }
 
-const filmQuery = (para) => {
+const filmQuery = (params) => {
   return (
     prefixes +
     `SELECT ?idmovie ?movietitle ?abstract ?year ?directname ?iddirect ?runtime ?gross ?idact ?actorname ?country WHERE {` +
@@ -96,7 +96,7 @@ const filmQuery = (para) => {
     `OPTIONAL { ?actor ^dbo:starring ?movie ; dbo:wikiPageID ?idact ; rdfs:label ?actorname. FILTER langMatches(lang(?actorname),"en")}. ` +
     `OPTIONAL { ?direct ^dbo:director ?movie ; dbo:wikiPageID ?iddirect ; rdfs:label ?directname. FILTER langMatches(lang(?directname),"en")}. ` +
 
-    `FILTER(?idmovie = ${para}) ` +
+    `FILTER(?idmovie = ${params}) ` +
     `FILTER langMatches(lang(?movietitle),"en") ` +
     `} LIMIT 100 `);
 }
