@@ -22,14 +22,41 @@ a:focus {
 body{
     margin:0;
     padding:0;
-    background-image:url(../images/tm-catalyst-bg.jpg),url(../images/titanic.jpg);
-    background-repeat:no-repeat,repeat;
+   background-image:url(../images/img.png),url(../images/img2.png) ;
+   background-color:#0f2f2f ;
+   background-repeat:no-repeat;
+    white-space: nowrap; 
+	 background-position:top;
+	vertical-align:bottom;
     background-size:auto;
-    background-attachment: fixed;
-    background-position:left,right-side;
+    background-attachment:fixed;
     font-family: 'Open Sans', sans-serif;
     font-size: 18px;
     font-weight:300;
+}
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: white;
+  color:black;
+}
+
+li {
+  
+}
+
+li a {
+  display: block;
+  color: black;
+  padding: 1px 1px;
+  margin-left:30px;
+  text-decoration: none;
+}
+
+li a:hover {
+  background-color: #111;
 }
 .tm-logo { margin-bottom: 25px; }
 
@@ -81,8 +108,7 @@ p {
     margin-bottom: 30px;
 }
 .search-box { 
-    margin-left: 80px;
-    margin-right: 80px;	
+    max-width: 35em;
 }
 .input-movie{
 	width: 100%;
@@ -182,12 +208,12 @@ p {
     right: 0;
     margin-left: auto;
     margin-right: auto;
-    height: 50%;
+    height: 180px;
 }
 
 .tm-float-section { position: relative; }
 .tm-float-section-body {
-    position: absolute;
+    position: relative;
     top: 80px;
     width: 85%;
     left: 0;
@@ -287,6 +313,7 @@ h1 { font-size: 54px; }
 }
 
 .tm-services-section-padding { padding-bottom: 100px; }
+.tm-movies-section-padding { padding-bottom: 180px; }
 
 .tm-img {
     width: 100%;

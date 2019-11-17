@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="Font-Awesome-4.7/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/templatemo-style-movie.css">
+    <link rel="stylesheet" type="text/css" href="css/custom.css">
+    <title>Cin'IFile</title>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script defer src="posters.js"></script>
+    <script defer src="movie.js"></script>
+</head>
+
+<body>
+    <nav>
+        <a href='/'><img class="img-resizable" src="images/logo_transparent.png" /></a>
+        <h1 class="text-uppercase">Cin'IFile</h1>
+    </nav>
+
+    <div class='container pt-3' >
+        <div class="row">
+            <div class="col-md-5">
+                <img id="img-movie" class="affiche-film" src="" />
+            </div>
+            <div class="col-md-7">
+                <div class=container>
+                    <div class="row">
+                        <div class="col-md-7">
+                            <h1 class="title text-center is-wrapped" id="movie-title">Movie</h1>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-7">
+                            <p id="description" class="is-wrapped text-justify">
+                                Unavailable
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <p>Movie runtime : </p>
+                            <p id="movie-runtime">
+                                Unavailable
+                            </p>
+                        </div>
+                        <div id="year-container" class="col-md-2">
+                            <p>Release year : </p>
+                            <p id="year">
+                                Unavailable
+                            </p>
+                        </div>
+                        <div class="col-md-3">
+                            <p>Director(s) : </p>
+                            <ul id="director-list">
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <p>Gross : </p>
+                            <p id="gross">
+                                Unavailable
+                            </p>
+                        </div>
+                        <div class="col-md-2">
+                            <p>Country : </p>
+                            <p id="original-country">
+                                Unavailable
+                            </p>
+                        </div>
+                        <div class="col-md-3">
+                            <p>Cast : </p>
+                            <ul id="actor-list">
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

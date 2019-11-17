@@ -1,0 +1,21 @@
+.is-wrapped {
+    white-space: normal;
+}
+
+.is-centered-flex-column {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.is-padded-flex-column {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 3rem;
+}
+
+.pt-3{
+    padding-top: 3rem;
+}
