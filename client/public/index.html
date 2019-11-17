@@ -41,10 +41,16 @@
         <nav id="side-search">
             <a href='/'><img class="img-resizable" src="images/logo_transparent.png" /></a>
             <h1 class="header">Cin'IFile</h1>
+            <div class="navigation">
+                <button onclick="toPage(-1)"> &lt;&lt; </button>
+                <p id="page-number"> 1 </p>
+                <button onclick="toPage(1)"> &gt;&gt; </button>
+            </div>
         </nav>
 
         <ul id="movie-search-results">
         </ul>
+
     </div>
 
 
@@ -55,6 +61,15 @@
                 getMovies(document.getElementById('search-movie-input').value, 12, 1);
             }
         });
+
+        function toPage(change) {
+            let pageNode = document.getElementById("page-number");
+            let newPage = parseInt(pageNode.textContent) + change;
+            if(newPage !== 0){
+                getMovies(document.getElementById('search-movie-input').value, 12, newPage);
+                pageNode.innerHTML = newPage;
+            }
+        }
         // Write current year in copyright text.
         // document.getElementsByClassName("tm-current-year").value = new Date().getFullYear();
     </script>
