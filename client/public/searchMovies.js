@@ -3,11 +3,20 @@ const clientUrl = '';
 
 function getMovies(movieSearch, size, page) {
     movieSearch = movieSearch.toLowerCase();
+
+    let filters = {
+        country: document.getElementById("filter-country").value,
+        year: document.getElementById("filter-year").value,
+    }
+
     const queryParams = {
         title: movieSearch,
         size,
-        page
+        page,
+        filters
     }
+
+    console.log(queryParams);
 
     let searchUrl = serverUrl + '/search';
     if (typeof movieSearch === 'string') {
@@ -15,11 +24,13 @@ function getMovies(movieSearch, size, page) {
             renderSearchResult(responseData);
 
             const searchBar = document.getElementById("main-search-bar");
+            const searchOptions = document.getElementById("search-options");
 
             document.getElementById("main-search").style.display = "none";
             const navBar = document.getElementById("side-search")
             navBar.classList.add("horizontal-grid");
             navBar.appendChild(searchBar);
+            navBar.appendChild(searchOptions);
         });
     } else {
         console.error(movieSearch);

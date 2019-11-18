@@ -58,7 +58,7 @@ body {
 }
 
 .input-container-md {
-    margin: auto 10vw;
+    margin: auto;
 }
 
 .input-container-md * {
@@ -117,6 +117,20 @@ body {
 .navigation button:hover {
     color: white;
     cursor: pointer;
+}
+
+.options {
+    margin: auto;
+    justify-content: center;
+}
+
+
+.options label {
+    color: white;
+}
+
+.filters input{
+    width: 5vw;
 }
 
 nav {

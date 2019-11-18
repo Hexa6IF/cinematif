@@ -13,10 +13,18 @@ const prefixes = (
   'PREFIX skos: <http://www.w3.org/2004/02/skos/core#> ');
 
 const addFilters = (filters) => {
-    return '';
+    let filter = ``;
+
+    if(filters.country) {
+        filter += `?movie dbpedia2:country ?country. FILTER(?country like '%${filters.country}%'). `
+    }
+    if(filters.year) {
+        filter += `?movie dbpedia2:recorded ?year. FILTER(?year > ${filters.year}). `
+    }
+    return filter;
 }
 
-const searchQuery = (params, filters) => {
+const searchQuery = (params) => {
   return (
     prefixes +
     `SELECT DISTINCT ?movietitle ?idmovie WHERE { ` +
@@ -25,7 +33,7 @@ const searchQuery = (params, filters) => {
     `rdfs:label ?movietitle ; ` +
     `dbo:wikiPageID ?idmovie . ` +
 
-    addFilters(filters) +
+    addFilters(params.filters) +
 
     `FILTER (lcase(str(?movietitle)) like '%${params.title}%') ` +
     `FILTER langMatches(lang(?movietitle),"en") ` +
