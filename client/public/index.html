@@ -30,7 +30,7 @@
                 <div class="">
                     <button
                         class="input-btn"
-                        onclick="getMovies(document.getElementById('search-movie-input').value, 12, 1)"
+                        onclick="search()"
                         type="button"
                     >
                         Search
@@ -58,9 +58,16 @@
         //events
         document.getElementById('search-movie-input').addEventListener('keypress', e => {
             if (e.key === 'Enter') {
-                getMovies(document.getElementById('search-movie-input').value, 12, 1);
+                search();
             }
         });
+
+        function search() {
+            let pageNode = document.getElementById("page-number");
+            pageNode.innerHTML = 1;
+            let page = parseInt(pageNode.textContent);
+            getMovies(document.getElementById('search-movie-input').value, 12, page);
+        }
 
         function toPage(change) {
             let pageNode = document.getElementById("page-number");
