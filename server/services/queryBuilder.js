@@ -27,7 +27,7 @@ const addFilters = (filters) => {
 const searchQuery = (params) => {
   return (
     prefixes +
-    `SELECT DISTINCT ?movietitle ?idmovie WHERE { ` +
+    `SELECT DISTINCT ?movietitle ?idmovie ?relatedmovie WHERE { ` +
 
     `?movie a dbo:Film ; ` +
     `rdfs:label ?movietitle ; ` +
@@ -89,7 +89,7 @@ const directorQuery = (params) => {
 const filmQuery = (params) => {
   return (
     prefixes +
-    `SELECT ?idmovie ?movietitle ?abstract ?year ?directname ?iddirect ?runtime ?gross ?idact ?actorname ?country WHERE {` +
+    `SELECT ?idmovie ?movietitle ?relatedidmovie ?relatedmovietitle ?abstract ?year ?directname ?iddirect ?runtime ?gross ?idact ?actorname ?country WHERE {` +
 
     `?movie a dbo:Film ; ` +
     `rdfs:label ?movietitle ; ` +
@@ -102,7 +102,7 @@ const filmQuery = (params) => {
     `OPTIONAL { ?movie dbo:abstract ?abstract. FILTER langMatches(lang(?abstract), "en") }. ` +
 
     `OPTIONAL { ?actor ^dbo:starring ?movie ; dbo:wikiPageID ?idact ; rdfs:label ?actorname. FILTER langMatches(lang(?actorname),"en")}. ` +
-    `OPTIONAL { ?direct ^dbo:director ?movie ; dbo:wikiPageID ?iddirect ; rdfs:label ?directname. FILTER langMatches(lang(?directname),"en")}. ` +
+    `OPTIONAL { ?director ^dbo:director ?movie ; dbo:wikiPageID ?iddirect ; rdfs:label ?directname . ?relatedmovie ^dbo:director ?director ; rdfs:label ?relatedmovietitle ; dbo:wikiPageID ?relatedidmovie . FILTER langMatches(lang(?directname),"en") FILTER langMatches(lang(?relatedmovietitle),"en") }. ` +
 
     `FILTER(?idmovie = ${params}) ` +
     `FILTER langMatches(lang(?movietitle),"en") ` +

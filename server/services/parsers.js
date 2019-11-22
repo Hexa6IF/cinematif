@@ -1,8 +1,9 @@
 exports.__esModule = true;
 
-const getDirectorsAndActors = (results) => {
+const getDirectorsActorsAndRelatedMovies= (results) => {
     const directorMap = new Map()
     const actorMap = new Map()
+    const relFilmMap = new Map()
     results.forEach(result => {
         if (result.iddirect) {
             const directorKey = result.iddirect.value;
@@ -12,7 +13,7 @@ const getDirectorsAndActors = (results) => {
             };
             directorMap.set(directorKey, director);
         };
-        
+
         if (result.idact) {
             const actorKey = result.idact.value;
             const actor = {
@@ -20,11 +21,21 @@ const getDirectorsAndActors = (results) => {
                 name: result.actorname
             };
             actorMap.set(actorKey, actor);
-        };        
+        };
+
+        if (result.relatedidmovie) {
+            const relFilmKey = result.relatedidmovie.value;
+            const relFilm = {
+                id: result.relatedidmovie,
+                name: result.relatedmovietitle
+            };
+            relFilmMap.set(relFilmKey, relFilm);
+        }
     });
     return ({
         directors: directorMap,
-        actors: actorMap
+        actors: actorMap,
+        relatedfilms: relFilmMap
     });
 }
 
@@ -44,17 +55,21 @@ const getFilms = (results) => {
 exports.groupDirectorsActors = (results) => {
     let result = [];
     if (results && results.length) {
-        const maps = getDirectorsAndActors(results);
+        const maps = getDirectorsActorsAndRelatedMovies(results);
         result = results[0];
         delete result.idact;
         delete result.actorname;
         delete result.iddirect;
         delete result.directname;
+        delete result.relatedidmovie;
+        delete result.relatedmovietitle;
         result = Object.assign(result, {
             actors: Array.from(maps.actors.values()),
-            directors: Array.from(maps.directors.values())
+            directors: Array.from(maps.directors.values()),
+            relatedmovies: Array.from(maps.relatedfilms.values())
         });
     }
+    console.log(result);
     return [result];
 }
 

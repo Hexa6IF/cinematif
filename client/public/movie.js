@@ -18,6 +18,8 @@ function getMovieDetails(movieId) {
 
 async function renderMovieDetails(responseData) {
   let bindings = responseData.results.bindings[0];
+  console.log(responseData);
+  console.log(bindings);
   try{
     document.getElementById("img-movie").setAttribute('src', await getPosterPathFromName(bindings.movietitle.value));
   }catch(e){ }
@@ -38,6 +40,19 @@ async function renderMovieDetails(responseData) {
     }
   } else {
     actorList.innerText = "Not found";
+  }
+
+  let relFilmList = document.getElementById("rel-list");
+  const movieUrl = '/movie.html';
+  if (bindings.relatedmovies.length > 0) {
+    bindings.relatedmovies.forEach(movie => {
+      let relMovie = document.createElement("li");
+      let relMovieDetail = document.createElement("a");
+      relMovieDetail.href = clientUrl + movieUrl + '?id=' + movie.id.value;
+      relMovieDetail.appendChild(document.createTextNode(movie.name.value));
+      relMovie.appendChild(relMovieDetail);
+      relFilmList.appendChild(relMovie);
+    });
   }
 
   let directorList = document.getElementById("director-list");
