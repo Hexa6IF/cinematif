@@ -8,6 +8,7 @@ There are two ways to execute the application locally on your machine :
 
 1. Using `Docker-Compose` and `Make` :
 - `make prod` to build and mount the docker container
+- If there is a permissions error for `provisioning/check_environment.sh`, you can attribute the necessary permissions by running `chmod +x provisioning/check_environment.sh`
 - This requires `Make`, `Docker` and `Docker-Compose`
 
 2. Using `nodeJS` and `npm` :
