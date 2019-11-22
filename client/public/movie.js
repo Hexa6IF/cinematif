@@ -18,8 +18,6 @@ function getMovieDetails(movieId) {
 
 async function renderMovieDetails(responseData) {
   let bindings = responseData.results.bindings[0];
-  console.log(responseData);
-  console.log(bindings);
   try{
     document.getElementById("img-movie").setAttribute('src', await getPosterPathFromName(bindings.movietitle.value));
   }catch(e){ }

@@ -69,7 +69,6 @@ exports.groupDirectorsActors = (results) => {
             relatedmovies: Array.from(maps.relatedfilms.values())
         });
     }
-    console.log(result);
     return [result];
 }
 
