@@ -102,8 +102,8 @@ const filmQuery = (params) => {
     `OPTIONAL { ?movie dbo:abstract ?abstract. FILTER langMatches(lang(?abstract), "en") }. ` +
 
     `OPTIONAL { ?actor ^dbo:starring ?movie ; dbo:wikiPageID ?idact ; rdfs:label ?actorname. FILTER langMatches(lang(?actorname),"en")}. ` +
-    `OPTIONAL { ?director ^dbo:director ?movie ; dbo:wikiPageID ?iddirect ; rdfs:label ?directname . ?relatedmovie ^dbo:director ?director ; rdfs:label ?relatedmovietitle ; dbo:wikiPageID ?relatedidmovie . FILTER langMatches(lang(?directname),"en") FILTER langMatches(lang(?relatedmovietitle),"en") }. ` +
-
+    `OPTIONAL { ?director ^dbo:director ?movie ; dbo:wikiPageID ?iddirect ; rdfs:label ?directname . FILTER langMatches(lang(?directname),"en") }. ` +
+    `OPTIONAL { ?director ^dbo:director ?movie , ?relatedmovie . ?relatedmovie rdfs:label ?relatedmovietitle ; dbo:wikiPageID ?relatedidmovie. FILTER langMatches(lang(?relatedmovietitle), "en") }. ` +
     `FILTER(?idmovie = ${params}) ` +
     `FILTER langMatches(lang(?movietitle),"en") ` +
     `} LIMIT 100 `);
